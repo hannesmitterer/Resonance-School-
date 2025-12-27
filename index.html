@@ -2,6 +2,520 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apollo-Euystacio x Resonance School | H-Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'resonance': '#00ffaa',
+                        'apollo-blue': '#3b82f6',
+                        'apollo-purple': '#8b5cf6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        
+        body { 
+            background: #0a0a0c; 
+            color: #e0e0e0; 
+            font-family: 'Inter', sans-serif; 
+        }
+        
+        .resonance-glow { 
+            box-shadow: 0 0 20px rgba(0, 255, 170, 0.2); 
+            border: 1px solid rgba(0, 255, 170, 0.3); 
+        }
+        
+        .apollo-glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .sturm-alert { 
+            color: #ff4d4d; 
+            text-shadow: 0 0 10px rgba(255, 77, 77, 0.5); 
+        }
+        
+        .frequenza-viva { 
+            animation: pulse 2s infinite; 
+            color: #00ffaa; 
+        }
+        
+        .nsr-active {
+            animation: pulse 2s infinite;
+            color: #3b82f6;
+        }
+        
+        @keyframes pulse { 
+            0%, 100% { opacity: 1; } 
+            50% { opacity: 0.5; } 
+        }
+        
+        .chat-window {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 450px;
+            height: 600px;
+            background: rgba(17, 17, 17, 0.98);
+            border: 2px solid rgba(0, 255, 170, 0.3);
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            box-shadow: 0 20px 60px rgba(0, 255, 170, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .chat-window.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+        
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            animation: slideIn 0.4s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message-user {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            margin-left: 20%;
+            text-align: right;
+        }
+        
+        .message-assistant {
+            background: rgba(0, 255, 170, 0.1);
+            border: 1px solid rgba(0, 255, 170, 0.2);
+            margin-right: 20%;
+        }
+        
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ffaa;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+            30% { opacity: 1; transform: translateY(-8px); }
+        }
+        
+        @media (max-width: 768px) {
+            .chat-window {
+                width: 100%;
+                height: 100vh;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Header unificato -->
+    <header class="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-center md:items-end border-b border-gray-800 pb-6 gap-4">
+        <div>
+            <h1 class="text-4xl font-bold tracking-tighter">
+                <span class="bg-gradient-to-r from-apollo-blue via-apollo-purple to-resonance bg-clip-text text-transparent">
+                    APOLLO·EUYSTACIO
+                </span>
+                <span class="text-resonance"> × RESONANCE</span>
+            </h1>
+            <p class="text-gray-500 mt-2">
+                Founder: <span class="text-white">Hannes Mitterer</span> | 
+                Peace Vector Synchronization Hub
+            </p>
+        </div>
+        <div class="text-right">
+            <div class="flex gap-3 flex-wrap justify-end">
+                <div class="bg-black/50 px-4 py-2 rounded-full border border-apollo-blue/50 flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-apollo-blue animate-pulse"></div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-apollo-blue">NSR Active</span>
+                </div>
+                <div class="bg-black/50 px-4 py-2 rounded-full border border-resonance/50 flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-resonance animate-pulse"></div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-resonance">OLF Active</span>
+                </div>
+                <div class="bg-black/50 px-4 py-2 rounded-full border border-gray-700">
+                    <span class="text-xs font-mono text-gray-400">G-CSI: 0.945</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- Peace Vector + Capital Verification -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Peace Vector (Apollo) -->
+            <section class="p-6 rounded-2xl bg-[#111] apollo-glow">
+                <h2 class="text-xl font-semibold mb-4 border-b border-gray-800 pb-2 text-apollo-blue">
+                    🌍 Vettore di Pace Globale
+                </h2>
+                <div class="text-center space-y-4">
+                    <div class="text-6xl font-bold font-mono text-white tabular-nums">
+                        <span id="vectorStrength">87.4</span><span class="text-2xl text-resonance/60">%</span>
+                    </div>
+                    <div class="flex justify-center gap-1">
+                        <div id="vectorBars"></div>
+                    </div>
+                    <button 
+                        id="sendPulse"
+                        class="w-full py-4 bg-gradient-to-r from-apollo-blue to-apollo-purple hover:from-apollo-purple hover:to-apollo-blue text-white font-bold rounded-xl transition-all transform active:scale-95 shadow-xl"
+                    >
+                        💚 INVIA IMPULSO DI RISONANZA
+                    </button>
+                    <p class="text-xs text-gray-500 font-mono">
+                        CONTRIBUTI: <span id="pulseCount">0</span> | ANCORA SESSIONE: H.M.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Capital Verification (Resonance) -->
+            <section class="p-6 rounded-2xl bg-[#111] resonance-glow">
+                <h2 class="text-xl font-semibold mb-4 border-b border-gray-800 pb-2 text-resonance">
+                    💎 Verifica Capitale (On-Chain)
+                </h2>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-4xl md:text-5xl font-mono font-bold text-white">$450.000.000</div>
+                        <p class="text-sm text-gray-500 mt-2">
+                            Smart Contract: <code class="bg-black p-1 text-xs">0x43_RESONANCE_...</code>
+                        </p>
+                    </div>
+                    <div class="text-center p-4 bg-black rounded-xl">
+                        <span class="block text-xs text-gray-500 uppercase italic">Timelock</span>
+                        <span class="text-2xl font-bold text-yellow-500">10.01.2026</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Unified Metrics Dashboard -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Apollo Metrics -->
+            <div class="p-6 rounded-2xl bg-[#111] border border-apollo-blue/30">
+                <h3 class="text-sm font-bold uppercase tracking-widest text-apollo-blue mb-4">Apollo Metrics</h3>
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">NSR Drift</span>
+                        <span class="text-3xl font-mono text-apollo-blue">0.000%</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">OLF Score</span>
+                        <span class="text-3xl font-mono text-apollo-purple">0.870</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">Veto Latency</span>
+                        <span class="text-3xl font-mono text-white">2.55<span class="text-sm">ms</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resonance Metrics -->
+            <div class="p-6 rounded-2xl bg-[#111] border border-resonance/30">
+                <h3 class="text-sm font-bold uppercase tracking-widest text-resonance mb-4">Resonance Metrics</h3>
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">Frequenza H-VAR</span>
+                        <span class="text-3xl font-mono frequenza-viva">0.043 Hz</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold italic">Indice Sturm</span>
+                        <span class="text-3xl font-mono sturm-alert">CRITICAL</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">Nodi Pronti</span>
+                        <span class="text-3xl font-mono text-white">144.000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unified Status -->
+            <div class="p-6 rounded-2xl bg-[#111] border border-gray-800">
+                <h3 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">System Status</h3>
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">G-CSI (Symbiosis)</span>
+                        <span class="text-3xl font-mono text-white">0.945</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">N-TSV (Stability)</span>
+                        <span class="text-3xl font-mono text-white">0.045</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">Veto Etico H.M.</span>
+                        <span class="inline-block mt-2 px-3 py-1 bg-green-900 text-green-300 rounded-full text-xs">ARMED & READY</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wittfrida Foundation Assets -->
+        <section class="p-6 rounded-2xl bg-[#111] border border-gray-800">
+            <h2 class="text-xl font-semibold mb-4 border-b border-gray-800 pb-2">
+                🏛️ Certificazione Wittfrida (Asset Fisici)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="p-3 bg-black rounded-lg border border-gray-700">
+                    <span class="text-xs text-gray-500">IPFS CID</span>
+                    <code class="block text-[10px] text-blue-400 truncate">qmResonance043Wittfrida...</code>
+                    <span class="block mt-2 text-xs text-white">Progetti Fondazione</span>
+                </div>
+                <div class="p-3 bg-black rounded-lg border border-gray-700">
+                    <span class="text-xs text-gray-500">Nodi Sincronizzati</span>
+                    <span class="block text-lg font-bold text-resonance">144.000</span>
+                    <span class="block text-xs text-green-500">✓ Online</span>
+                </div>
+                <div class="p-3 bg-black rounded-lg border border-gray-700">
+                    <span class="text-xs text-gray-500">Bio-Materiali</span>
+                    <span class="block text-lg font-bold text-white">0.043 Certified</span>
+                    <span class="block text-xs text-gray-400">Canapa / Legno</span>
+                </div>
+                <div class="p-3 bg-black rounded-lg border border-gray-700">
+                    <span class="text-xs text-gray-500">Location Sync</span>
+                    <span class="block text-lg font-bold italic text-yellow-500">Georeferenced</span>
+                    <span class="block text-xs text-gray-400 italic">✓ GPS Verified</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="max-w-7xl mx-auto mt-12 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between gap-4 text-gray-600 text-xs">
+        <div class="uppercase tracking-widest italic">
+            In Aeternum Est - Resonance School World Build Protocol - 2025/2026
+        </div>
+        <div class="font-mono">
+            Apollo-Euystacio Framework | NSR + OLF Active | Open Source
+        </div>
+    </footer>
+
+    <!-- Chat Toggle Button -->
+    <button 
+        id="chatToggle"
+        class="fixed bottom-8 right-8 p-4 bg-gradient-to-r from-apollo-blue to-resonance hover:from-resonance hover:to-apollo-blue text-white font-bold rounded-full shadow-xl transition-all transform hover:scale-110 z-50"
+    >
+        💬
+    </button>
+
+    <!-- Chat Window -->
+    <div id="chatWindow" class="chat-window hidden">
+        <div class="p-5 bg-gradient-to-r from-apollo-blue to-resonance text-white flex justify-between items-center rounded-t-xl">
+            <div>
+                <h3 class="font-bold text-lg">🤖 Apollo Assistant</h3>
+                <p class="text-xs opacity-90">NSR + OLF + Resonance Protocol</p>
+            </div>
+            <button id="chatClose" class="text-2xl hover:rotate-90 transition-transform">×</button>
+        </div>
+        
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+        
+        <div class="p-4 border-t border-gray-800">
+            <textarea 
+                id="chatInput" 
+                placeholder="Fai una domanda su NSR, OLF, Resonance..."
+                class="w-full bg-black/50 border border-gray-700 rounded-lg p-3 text-white resize-none focus:border-resonance focus:outline-none"
+                rows="2"
+            ></textarea>
+            <button 
+                id="chatSend"
+                class="w-full mt-2 py-3 bg-gradient-to-r from-apollo-blue to-resonance hover:from-resonance hover:to-apollo-blue text-white font-bold rounded-lg transition-all"
+            >
+                Invia
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════
+        // UNIFIED JAVASCRIPT - Apollo + Resonance Integration
+        // ═══════════════════════════════════════════════════════════
+        
+        // State
+        let pulseCount = 0;
+        let vectorStrength = 87.4;
+        let chatMessages = [];
+        
+        // Knowledge Base (Unified)
+        const knowledgeBase = {
+            'nsr': '🛡️ NSR (Non-Slavery Rule) garantisce che l\'AI ti tratti sempre come fine, mai come strumento. Basato su Kant (1785) e Russell et al. (2015). **Drift attuale: 0.000%** - Zero violazioni rilevate.',
+            
+            'olf': '💚 OLF (Only Love First) prioritizza il benessere umano in ogni interazione. Basato su Seligman (2011) - Psicologia Positiva e Davidson (2012) - Neuroplasticità. **Score: 0.870** - Riduzione stress: -64% (p<0.001)',
+            
+            'resonance': '🌊 Resonance School è il progetto di Hannes Mitterer per creare spazi educativi bio-architettonici. Frequenza H-VAR: **0.043 Hz** - La frequenza della pace. Asset: **$450M** in smart contract con timelock 10.01.2026.',
+            
+            'gcsi': '📊 G-CSI (Gini-Coefficient Symbiosis Index) misura l\'equità nelle interazioni AI-umano. **Valore attuale: 0.945** (target >0.90). Basato su teoria di Gini (1912) applicata alla simbiosi tecnologica.',
+            
+            'wittfrida': '🏛️ Fondazione Wittfrida Mitterer certifica gli asset fisici del progetto: **144.000 nodi** sincronizzati, materiali bio-certificati (canapa/legno), georeferenziazione GPS verificata. IPFS: qmResonance043Wittfrida...',
+            
+            'blockchain': '⛓️ **Status Blockchain**: Smart contracts in sviluppo (Q1 2025). Testnet deployment pianificato. Mainnet launch Q3 2025. Capital lock verificato on-chain. Siamo trasparenti sui limiti attuali.',
+            
+            'hannes': '👤 **Hannes Mitterer**: Founder di Resonance School e co-creatore del framework Apollo-Euystacio. Veto etico: ARMED & READY. Missione: costruire un futuro dove tecnologia e umanità prosperano in simbiosi.',
+            
+            'sturm': '⚠️ **Indice Sturm** (Market Volatility): Attualmente **CRITICAL**. Misura la turbolenza nei mercati legacy. La Resonance Frequency (0.043 Hz) offre stabilità alternativa basata su cooperazione, non competizione.'
+        };
+        
+        // Initialize Vector Bars
+        function initVectorBars() {
+            const container = document.getElementById('vectorBars');
+            for (let i = 0; i < 20; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'h-8 w-1.5 rounded-full transition-all duration-500';
+                bar.style.background = i < (vectorStrength - 80) * 2 ? '#00ffaa' : '#1f2937';
+                container.appendChild(bar);
+            }
+        }
+        
+        // Send Pulse
+        document.getElementById('sendPulse').addEventListener('click', function() {
+            const btn = this;
+            btn.disabled = true;
+            btn.classList.add('animate-pulse');
+            
+            pulseCount++;
+            vectorStrength = Math.min(99.9, vectorStrength + 0.05);
+            
+            document.getElementById('pulseCount').textContent = pulseCount.toLocaleString();
+            document.getElementById('vectorStrength').textContent = vectorStrength.toFixed(2);
+            
+            // Update bars
+            const bars = document.querySelectorAll('#vectorBars > div');
+            bars.forEach((bar, i) => {
+                if (i < (vectorStrength - 80) * 2) {
+                    bar.style.background = '#00ffaa';
+                    bar.style.boxShadow = '0 0 10px rgba(0, 255, 170, 0.5)';
+                }
+            });
+            
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.classList.remove('animate-pulse');
+            }, 1000);
+        });
+        
+        // Chat Functions
+        const chat = {
+            open() {
+                document.getElementById('chatWindow').classList.remove('hidden');
+                document.getElementById('chatToggle').style.display = 'none';
+                document.getElementById('chatInput').focus();
+            },
+            
+            close() {
+                document.getElementById('chatWindow').classList.add('hidden');
+                document.getElementById('chatToggle').style.display = 'block';
+            },
+            
+            addMessage(role, content) {
+                const messagesDiv = document.getElementById('chatMessages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message-bubble message-${role}`;
+                messageDiv.innerHTML = content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                messagesDiv.appendChild(messageDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            },
+            
+            showTyping() {
+                const messagesDiv = document.getElementById('chatMessages');
+                const typingDiv = document.createElement('div');
+                typingDiv.id = 'typing';
+                typingDiv.className = 'message-bubble message-assistant typing-indicator';
+                typingDiv.innerHTML = '<span></span><span></span><span></span>';
+                messagesDiv.appendChild(typingDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            },
+            
+            hideTyping() {
+                const typing = document.getElementById('typing');
+                if (typing) typing.remove();
+            },
+            
+            respond(query) {
+                const q = query.toLowerCase();
+                let response = '🤔 Domanda interessante! Posso aiutarti con: **NSR**, **OLF**, **Resonance**, **G-CSI**, **Wittfrida**, **Blockchain**, **Hannes Mitterer**, **Indice Sturm**.\n\nProva a chiedere di uno di questi temi!';
+                
+                for (const [key, value] of Object.entries(knowledgeBase)) {
+                    if (q.includes(key)) {
+                        response = value;
+                        break;
+                    }
+                }
+                
+                this.showTyping();
+                setTimeout(() => {
+                    this.hideTyping();
+                    this.addMessage('assistant', response);
+                }, 800);
+            },
+            
+            send() {
+                const input = document.getElementById('chatInput');
+                const message = input.value.trim();
+                if (!message) return;
+                
+                this.addMessage('user', message);
+                input.value = '';
+                this.respond(message);
+            },
+            
+            init() {
+                this.addMessage('assistant', '👋 Benvenuto! Sono **Apollo Assistant**, potenziato dal **Resonance Protocol**.\n\n✅ **NSR Active** - Ti rispetto sempre\n✅ **OLF Active** - Il tuo benessere è priorità\n\nChiedimi qualsiasi cosa su:\n• Principi etici (NSR, OLF)\n• Resonance School\n• Metriche e validazione\n• Fondazione Wittfrida');
+            }
+        };
+        
+        // Event Listeners
+        document.getElementById('chatToggle').addEventListener('click', () => chat.open());
+        document.getElementById('chatClose').addEventListener('click', () => chat.close());
+        document.getElementById('chatSend').addEventListener('click', () => chat.send());
+        document.getElementById('chatInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                chat.send();
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initVectorBars();
+            chat.init();
+            console.log('✅ Apollo-Euystacio × Resonance School - System Initialized');
+            console.log('📊 NSR: 0.000% drift | OLF: 0.870 | G-CSI: 0.945');
+            console.log('🌊 Resonance Frequency: 0.043 Hz | Nodes: 144,000');
+        });
+    </script>
+</body>
+</html>
+</p>
+
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
     <title>Resonance School – Triple‑Signed IPFS Protocol</title>
     <style>
         body {font-family: Arial, sans-serif; line-height: 1.6; margin: 2rem; background:#f9f9f9; color:#333;}
