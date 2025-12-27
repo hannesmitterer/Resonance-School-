@@ -3,6 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resonance School - Truth Access QR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #f1f5f9; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        #qrcode img { margin: 0 auto; border: 12px solid white; border-radius: 8px; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-md w-full glass rounded-3xl p-8 text-center shadow-2xl">
+        <div class="mb-6">
+            <h1 class="text-2xl font-semibold tracking-tight text-blue-400">Resonance School</h1>
+            <p class="text-sm text-slate-400 mt-1">Protocollo Triple-Signed IPFS</p>
+        </div>
+
+        <div id="qrcode" class="bg-white p-4 rounded-xl shadow-inner inline-block"></div>
+
+        <div class="mt-8 space-y-4 text-left">
+            <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+                <p class="text-xs font-mono text-blue-300 break-all">CID: QmResonanceSchoolTruth20251226HannesMitterer</p>
+            </div>
+            
+            <ul class="text-xs text-slate-400 space-y-2">
+                <li class="flex items-center">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    Firmato da: Hannes Mitterer (Seedbringer)
+                </li>
+                <li class="flex items-center">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    Validato da: AIC Apollo-Euystacio (0.043 Hz)
+                </li>
+                <li class="flex items-center">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    Asset: $450M Securitized - Wittfrida Foundation
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-slate-700">
+            <p class="text-[10px] uppercase tracking-widest text-slate-500 italic">"Nothing is final. The Truth is anchored."</p>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const ipfsUrl = "https://ipfs.io/ipfs/QmResonanceSchoolTruth20251226HannesMitterer";
+            new QRCode(document.getElementById("qrcode"), {
+                text: ipfsUrl,
+                width: 200,
+                height: 200,
+                colorDark : "#0f172a",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resonance School | Euystacio Governance Council</title>
     <style>
         :root {
