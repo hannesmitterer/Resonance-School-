@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kosymbiosis Dashboard | Resonance School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+        
+        body { 
+            background: linear-gradient(135deg, #0a0a0c 0%, #1a1a2e 100%);
+            color: #e0e0e0; 
+            font-family: 'Inter', sans-serif; 
+        }
+        
+        .serif-font { font-family: 'Cinzel', serif; }
+        
+        .resonance-glow { 
+            box-shadow: 0 0 20px rgba(0, 255, 170, 0.2); 
+            border: 1px solid rgba(0, 255, 170, 0.3); 
+        }
+        
+        .card {
+            background: rgba(30, 30, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .status-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, #00ffaa, #00cc88);
+            color: #0a0a0c;
+            font-weight: bold;
+        }
+        
+        .tab-button:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: #888;
+        }
+        
+        .tab-button:not(.active):hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        
+        canvas {
+            border-radius: 8px;
+            background: rgba(10, 10, 12, 0.5);
+        }
+        
+        .log-entry {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #00ffaa;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+        }
+        
+        .narrative-card {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .narrative-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 255, 170, 0.3);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffaa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen p-4 md:p-8">
+    
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 pb-6 border-b border-gray-800">
+            <div>
+                <h1 class="text-4xl font-bold tracking-tight serif-font">
+                    <span class="bg-gradient-to-r from-[#00ffaa] via-[#3b82f6] to-[#8b5cf6] bg-clip-text text-transparent">
+                        KOSYMBIOSIS
+                    </span>
+                    <span class="text-gray-300"> FRAMEWORK</span>
+                </h1>
+                <p class="text-gray-400 mt-2">Resonance School | v1.0.043 | Real-Time Dashboard</p>
+            </div>
+            <div class="flex gap-3 flex-wrap">
+                <div class="px-4 py-2 rounded-full border border-[#00ffaa] flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-[#00ffaa] status-pulse"></div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-[#00ffaa]">System Active</span>
+                </div>
+                <div class="px-4 py-2 rounded-full border border-gray-700">
+                    <span class="text-xs font-mono text-gray-400">Frequency: 0.043 Hz</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="max-w-7xl mx-auto mb-6">
+        <div class="flex gap-2 overflow-x-auto pb-2">
+            <button class="tab-button active" data-tab="overview" onclick="switchTab('overview')">
+                🌊 Overview
+            </button>
+            <button class="tab-button" data-tab="nodes" onclick="switchTab('nodes')">
+                🔗 Node Monitor
+            </button>
+            <button class="tab-button" data-tab="visualizations" onclick="switchTab('visualizations')">
+                🎨 Visualizations
+            </button>
+            <button class="tab-button" data-tab="ipfs" onclick="switchTab('ipfs')">
+                📦 IPFS & Blockchain
+            </button>
+            <button class="tab-button" data-tab="logs" onclick="switchTab('logs')">
+                📜 Web3 Logs
+            </button>
+            <button class="tab-button" data-tab="narrative" onclick="switchTab('narrative')">
+                📖 Narratives
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto">
+        
+        <!-- Overview Tab -->
+        <div id="tab-overview" class="tab-content">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Metric Cards -->
+                <div class="card">
+                    <div class="text-xs text-gray-400 uppercase tracking-wider mb-2">Active Nodes</div>
+                    <div class="metric-value" id="metric-active-nodes">0</div>
+                    <div class="text-xs text-gray-500 mt-1">of 144,000 target</div>
+                </div>
+                
+                <div class="card">
+                    <div class="text-xs text-gray-400 uppercase tracking-wider mb-2">H-VAR Stability</div>
+                    <div class="metric-value" id="metric-hvar">0.0431</div>
+                    <div class="text-xs text-gray-500 mt-1">Harmonic variance</div>
+                </div>
+                
+                <div class="card">
+                    <div class="text-xs text-gray-400 uppercase tracking-wider mb-2">NSR Drift</div>
+                    <div class="metric-value" id="metric-nsr">0.000%</div>
+                    <div class="text-xs text-gray-500 mt-1">Zero tolerance</div>
+                </div>
+                
+                <div class="card">
+                    <div class="text-xs text-gray-400 uppercase tracking-wider mb-2">OLF Score</div>
+                    <div class="metric-value" id="metric-olf">0.870</div>
+                    <div class="text-xs text-gray-500 mt-1">Love-first index</div>
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="card mb-8">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <span>⚡</span> System Status
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-black/30 rounded-lg">
+                        <div class="text-sm text-gray-400 mb-1">IPFS Network</div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <span class="font-bold" id="status-ipfs">Initializing...</span>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1" id="status-ipfs-peers">0 peers</div>
+                    </div>
+                    
+                    <div class="p-4 bg-black/30 rounded-lg">
+                        <div class="text-sm text-gray-400 mb-1">Web3 Connection</div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <span class="font-bold" id="status-web3">Initializing...</span>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1" id="status-web3-network">Ethereum Mainnet</div>
+                    </div>
+                    
+                    <div class="p-4 bg-black/30 rounded-lg">
+                        <div class="text-sm text-gray-400 mb-1">Resonance Simulation</div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-yellow-500 status-pulse"></div>
+                            <span class="font-bold" id="status-resonance">Ready</span>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">0.043 Hz</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <h2 class="text-xl font-bold mb-4">🎬 Quick Actions</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button onclick="startResonance()" class="px-4 py-3 bg-gradient-to-r from-[#00ffaa] to-[#00cc88] hover:from-[#00cc88] hover:to-[#00ffaa] text-black font-bold rounded-lg transition-all">
+                        Start Resonance
+                    </button>
+                    <button onclick="connectIPFS()" class="px-4 py-3 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] hover:from-[#2563eb] hover:to-[#3b82f6] text-white font-bold rounded-lg transition-all">
+                        Connect IPFS
+                    </button>
+                    <button onclick="connectWeb3()" class="px-4 py-3 bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#8b5cf6] text-white font-bold rounded-lg transition-all">
+                        Connect Web3
+                    </button>
+                    <button onclick="runSimulation()" class="px-4 py-3 bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold rounded-lg transition-all">
+                        Run Simulation
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Node Monitor Tab -->
+        <div id="tab-nodes" class="tab-content hidden">
+            <div class="card mb-6">
+                <h2 class="text-xl font-bold mb-4">🌍 Regional Node Distribution</h2>
+                <div id="regional-stats" class="space-y-3">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="text-xl font-bold mb-4">🔍 Global Metrics</h2>
+                <div id="global-metrics" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualizations Tab -->
+        <div id="tab-visualizations" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="card">
+                    <h3 class="text-lg font-bold mb-3">🌊 Resonance Wave (0.043 Hz)</h3>
+                    <canvas id="canvas-resonance" width="600" height="300"></canvas>
+                </div>
+                
+                <div class="card">
+                    <h3 class="text-lg font-bold mb-3">🔗 Node Network</h3>
+                    <canvas id="canvas-network" width="600" height="300"></canvas>
+                </div>
+                
+                <div class="card">
+                    <h3 class="text-lg font-bold mb-3">⚖️ Sensisara Ethical Model</h3>
+                    <canvas id="canvas-ethical" width="600" height="300"></canvas>
+                </div>
+                
+                <div class="card">
+                    <h3 class="text-lg font-bold mb-3">📊 H-VAR Stability</h3>
+                    <canvas id="canvas-hvar" width="600" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- IPFS & Blockchain Tab -->
+        <div id="tab-ipfs" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="card">
+                    <h2 class="text-xl font-bold mb-4">📦 Pinned Content</h2>
+                    <div id="pinned-content" class="space-y-2 max-h-96 overflow-y-auto">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2 class="text-xl font-bold mb-4">⛓️ Blockchain Anchors</h2>
+                    <div id="blockchain-anchors" class="space-y-2 max-h-96 overflow-y-auto">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="text-xl font-bold mb-4">💰 Capital Allocations</h2>
+                <div id="capital-allocations" class="space-y-3">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Web3 Logs Tab -->
+        <div id="tab-logs" class="tab-content hidden">
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">📜 Real-Time Logs</h2>
+                    <div class="flex gap-2">
+                        <select id="log-filter" onchange="filterLogs()" class="px-3 py-2 bg-black/30 border border-gray-700 rounded text-sm">
+                            <option value="all">All Logs</option>
+                            <option value="node_sync">Node Sync</option>
+                            <option value="capital_allocation">Capital</option>
+                            <option value="consensus_state">Consensus</option>
+                            <option value="system">System</option>
+                            <option value="ethical_validation">Ethical</option>
+                            <option value="resonance_event">Resonance</option>
+                        </select>
+                        <button onclick="clearLogs()" class="px-3 py-2 bg-red-900/30 hover:bg-red-900/50 border border-red-700 rounded text-sm">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+                <div id="log-container" class="max-h-96 overflow-y-auto">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Narrative Tab -->
+        <div id="tab-narrative" class="tab-content hidden">
+            <div class="card mb-6">
+                <h2 class="text-xl font-bold mb-2">📖 World-Build Narratives</h2>
+                <p class="text-gray-400 mb-4">Explore the symbolic connections of the Kosymbiosis framework</p>
+                <div class="mb-4 p-4 bg-black/30 rounded-lg">
+                    <div class="text-sm text-gray-400 mb-2">Your Progress</div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <div class="text-2xl font-bold text-[#00ffaa]" id="user-resonance-level">0</div>
+                            <div class="text-xs text-gray-500">Resonance Level</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-[#3b82f6]" id="user-achievements">0</div>
+                            <div class="text-xs text-gray-500">Achievements</div>
+                        </div>
+                        <div>
+                            <div class="text-xl font-bold text-[#8b5cf6]" id="user-rank">Initiate</div>
+                            <div class="text-xs text-gray-500">Sentinel Rank</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="narratives-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Will be populated by JavaScript -->
+            </div>
+            
+            <!-- Narrative Detail Modal -->
+            <div id="narrative-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                <div class="card max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 id="modal-title" class="text-2xl font-bold serif-font"></h2>
+                        <button onclick="closeNarrativeModal()" class="text-2xl hover:text-[#00ffaa]">&times;</button>
+                    </div>
+                    <div id="modal-content" class="prose prose-invert max-w-none"></div>
+                    <div id="modal-interactions" class="mt-6 space-y-3"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="scripts/kosymbiosis-core.js"></script>
+    <script src="scripts/node-monitoring.js"></script>
+    <script src="scripts/aic-visualization.js"></script>
+    <script src="scripts/ipfs-integration.js"></script>
+    <script src="scripts/web3-logger.js"></script>
+    <script src="scripts/narrative-interactivity.js"></script>
+    
+    <script>
+        // Initialize all systems
+        let core, nodeMonitor, visualization, ipfs, web3Logger, narrative;
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🌊 Initializing Kosymbiosis Dashboard...');
+            
+            // Initialize core systems
+            core = new KosymbiosisCore();
+            nodeMonitor = new NodeMonitoringDashboard(core);
+            visualization = new AICVisualization(core);
+            ipfs = new IPFSIntegration(core);
+            web3Logger = new Web3Logger(core);
+            narrative = new NarrativeInteractivity(core);
+            
+            // Update UI with initial data
+            updateMetrics();
+            updateSystemStatus();
+            updateNarratives();
+            
+            // Start monitoring
+            nodeMonitor.startMonitoring(2000);
+            web3Logger.startSimulation(3000);
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            console.log('✅ Kosymbiosis Dashboard Initialized');
+        });
+        
+        function setupEventListeners() {
+            core.on('nodeStatusChanged', updateMetrics);
+            core.on('ipfsConnected', updateSystemStatus);
+            core.on('web3Connected', updateSystemStatus);
+            core.on('web3Log', addLogEntry);
+            core.on('nodeMetricsUpdate', updateNodeMetrics);
+        }
+        
+        function updateMetrics() {
+            const health = core.getSystemHealth();
+            document.getElementById('metric-active-nodes').textContent = health.nodes.active.toLocaleString();
+            document.getElementById('metric-hvar').textContent = health.metrics.hVarStability;
+            document.getElementById('metric-nsr').textContent = health.metrics.nsrDrift;
+            document.getElementById('metric-olf').textContent = health.metrics.olfScore;
+        }
+        
+        function updateSystemStatus() {
+            const ipfsStatus = ipfs.getStatus();
+            const web3Status = web3Logger.getStatus();
+            
+            document.getElementById('status-ipfs').textContent = ipfsStatus.connected ? 'Connected' : 'Disconnected';
+            document.getElementById('status-ipfs-peers').textContent = `${ipfsStatus.peers} peers`;
+            
+            document.getElementById('status-web3').textContent = web3Status.connected ? 'Connected' : 'Disconnected';
+            document.getElementById('status-web3-network').textContent = web3Status.network;
+            
+            document.getElementById('status-resonance').textContent = core.state.resonanceActive ? 'Active' : 'Ready';
+        }
+        
+        function updateNodeMetrics() {
+            const metrics = nodeMonitor.getGlobalMetrics();
+            const regional = nodeMonitor.getRegionalStats();
+            
+            // Update regional stats
+            const regionalContainer = document.getElementById('regional-stats');
+            if (regionalContainer && regional.length > 0) {
+                regionalContainer.innerHTML = regional.slice(0, 5).map(stat => `
+                    <div class="p-3 bg-black/30 rounded flex justify-between items-center">
+                        <div>
+                            <div class="font-bold">${stat.region}</div>
+                            <div class="text-xs text-gray-500">${stat.totalNodes} nodes</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-bold text-[#00ffaa]">${stat.syncPercentage}%</div>
+                            <div class="text-xs text-gray-500">${stat.avgLatency}ms</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Update global metrics
+            const metricsContainer = document.getElementById('global-metrics');
+            if (metricsContainer) {
+                metricsContainer.innerHTML = `
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400">Sync %</div>
+                        <div class="text-xl font-bold text-[#00ffaa]">${metrics.syncPercentage}%</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400">H-VAR</div>
+                        <div class="text-xl font-bold text-[#3b82f6]">${metrics.hVarStability}</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400">Latency</div>
+                        <div class="text-xl font-bold text-[#8b5cf6]">${metrics.avgLatency}</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400">Consensus</div>
+                        <div class="text-xl font-bold text-[#00ffaa]">${metrics.consensusStrength}</div>
+                    </div>
+                `;
+            }
+        }
+        
+        function addLogEntry(log) {
+            const container = document.getElementById('log-container');
+            if (!container) return;
+            
+            const logEl = document.createElement('div');
+            logEl.className = 'log-entry';
+            logEl.innerHTML = `
+                <div class="flex justify-between items-start mb-1">
+                    <span class="text-[#00ffaa] font-bold">[${log.type.toUpperCase()}]</span>
+                    <span class="text-gray-500 text-xs">${new Date(log.timestamp).toLocaleTimeString()}</span>
+                </div>
+                <div class="text-gray-300">${log.message}</div>
+                ${log.txHash ? `<div class="text-xs text-gray-500 mt-1">TX: ${log.txHash.substring(0, 20)}...</div>` : ''}
+            `;
+            
+            container.insertBefore(logEl, container.firstChild);
+            
+            // Keep only last 50 logs
+            while (container.children.length > 50) {
+                container.removeChild(container.lastChild);
+            }
+        }
+        
+        function updateNarratives() {
+            const narrativesContainer = document.getElementById('narratives-grid');
+            if (!narrativesContainer) return;
+            
+            const available = narrative.getAvailableNarratives();
+            narrativesContainer.innerHTML = available.map(n => `
+                <div class="card narrative-card" onclick="openNarrative('${n.id}')">
+                    <div class="text-4xl mb-3">${n.symbol}</div>
+                    <h3 class="font-bold text-lg mb-2">${n.title}</h3>
+                    <div class="text-xs text-green-500">✓ Unlocked</div>
+                </div>
+            `).join('');
+            
+            // Update user progress
+            const progress = narrative.getUserProgress();
+            document.getElementById('user-resonance-level').textContent = progress.resonanceLevel;
+            document.getElementById('user-achievements').textContent = progress.totalAchievements;
+            document.getElementById('user-rank').textContent = progress.sentinelRank;
+        }
+        
+        function openNarrative(narrativeId) {
+            const n = narrative.getNarrative(narrativeId);
+            if (!n) return;
+            
+            const modal = document.getElementById('narrative-modal');
+            document.getElementById('modal-title').innerHTML = `${n.symbol} ${n.title}`;
+            document.getElementById('modal-content').innerHTML = `<p class="text-gray-300 leading-relaxed">${n.content}</p>`;
+            
+            const interactionsHTML = n.interactions.map(int => `
+                <button onclick="executeNarrativeAction('${int.action}', '${narrativeId}')" 
+                        class="w-full px-4 py-3 bg-gradient-to-r from-[#00ffaa] to-[#00cc88] hover:from-[#00cc88] hover:to-[#00ffaa] text-black font-bold rounded-lg transition-all">
+                    ${int.prompt}
+                </button>
+            `).join('');
+            
+            document.getElementById('modal-interactions').innerHTML = interactionsHTML;
+            modal.classList.remove('hidden');
+        }
+        
+        function closeNarrativeModal() {
+            document.getElementById('narrative-modal').classList.add('hidden');
+        }
+        
+        async function executeNarrativeAction(action, narrativeId) {
+            const result = await narrative.executeInteraction(action);
+            alert(result.message);
+            updateNarratives();
+            if (result.success) {
+                closeNarrativeModal();
+            }
+        }
+        
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Start visualizations if needed
+            if (tabName === 'visualizations') {
+                startVisualizations();
+            } else if (tabName === 'ipfs') {
+                loadIPFSData();
+            }
+        }
+        
+        function startVisualizations() {
+            setTimeout(() => {
+                visualization.startVisualization('canvas-resonance', 'resonance_wave');
+                visualization.startVisualization('canvas-network', 'node_network', () => nodeMonitor.getGlobalMetrics());
+                visualization.startVisualization('canvas-ethical', 'sensisara_model');
+                visualization.startVisualization('canvas-hvar', 'hvar_stability');
+            }, 100);
+        }
+        
+        function loadIPFSData() {
+            // Load pinned content
+            const pinnedContainer = document.getElementById('pinned-content');
+            if (pinnedContainer) {
+                const pinned = ipfs.getPinnedContent();
+                pinnedContainer.innerHTML = pinned.map(p => `
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="font-mono text-xs text-[#00ffaa] mb-1">${p.cid}</div>
+                        <div class="text-sm font-bold">${p.key || 'Document'}</div>
+                        <div class="text-xs text-gray-500">${(p.size / 1024 / 1024).toFixed(2)} MB • ${p.replicas} replicas</div>
+                    </div>
+                `).join('');
+            }
+            
+            // Load blockchain anchors
+            const anchorsContainer = document.getElementById('blockchain-anchors');
+            if (anchorsContainer) {
+                const anchors = ipfs.getAnchors();
+                anchorsContainer.innerHTML = anchors.map(a => `
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="font-bold text-sm">Block #${a.blockNumber.toLocaleString()}</div>
+                            <div class="px-2 py-1 rounded text-xs ${a.status === 'confirmed' ? 'bg-green-900/30 text-green-400' : 'bg-yellow-900/30 text-yellow-400'}">
+                                ${a.status}
+                            </div>
+                        </div>
+                        <div class="font-mono text-xs text-gray-500">${a.blockchainTx.substring(0, 30)}...</div>
+                        <div class="text-xs text-gray-400 mt-1">${new Date(a.timestamp).toLocaleDateString()}</div>
+                    </div>
+                `).join('');
+            }
+            
+            // Load capital allocations
+            const capitalContainer = document.getElementById('capital-allocations');
+            if (capitalContainer) {
+                const allocations = ipfs.getCapitalAllocations();
+                capitalContainer.innerHTML = allocations.map(c => `
+                    <div class="p-4 bg-black/30 rounded">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <div class="font-bold text-lg">${c.amount}</div>
+                                <div class="text-sm text-gray-400">${c.type}</div>
+                            </div>
+                            <div class="px-3 py-1 rounded text-xs font-bold ${c.status === 'locked' ? 'bg-yellow-900/30 text-yellow-400' : 'bg-green-900/30 text-green-400'}">
+                                ${c.status.toUpperCase()}
+                            </div>
+                        </div>
+                        ${c.timelock ? `<div class="text-xs text-gray-500 mt-2">⏰ Timelock: ${new Date(c.timelock).toLocaleDateString()}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function filterLogs() {
+            // TODO: Implement log filtering
+        }
+        
+        function clearLogs() {
+            web3Logger.clearLogs();
+            document.getElementById('log-container').innerHTML = '';
+        }
+        
+        async function startResonance() {
+            core.startResonanceSimulation();
+            updateSystemStatus();
+        }
+        
+        async function connectIPFS() {
+            await ipfs.connect();
+            updateSystemStatus();
+        }
+        
+        async function connectWeb3() {
+            await web3Logger.connect();
+            updateSystemStatus();
+        }
+        
+        async function runSimulation() {
+            alert('🎬 Simulation started! Node activity and logs will update automatically.');
+            nodeMonitor.startMonitoring(1000);
+            web3Logger.startSimulation(2000);
+        }
+    </script>
+</body>
+</html>
