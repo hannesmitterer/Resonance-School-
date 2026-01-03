@@ -31,15 +31,45 @@ Il sistema monitora in tempo reale:
 
 ## 🚀 Come Accedere
 1.  **Visita il Portale**: Apri `index.html` per accedere all'interfaccia universitaria.
-2.  **Iscrizione**: Utilizza il modulo di *Enrollment* per generare il tuo ID crittografico.
-3.  **Biblioteca**: Esplora i contenuti sigillati su IPFS.
+2.  **Dashboard Kosymbiosis**: Apri `kosymbiosis-dashboard.html` per il sistema completo.
+3.  **Iscrizione**: Utilizza il modulo di *Enrollment* per generare il tuo ID crittografico.
+4.  **Biblioteca**: Esplora i contenuti sigillati su IPFS.
+
+## 🌊 Kosymbiosis Framework (NEW!)
+
+Il framework completo è ora operativo con:
+
+### Moduli Implementati
+- **🎨 AIC Visualizations**: Simulazione risonanza a 0.043 Hz con modello etico Sensisara
+- **🔗 Node Monitoring**: Tracciamento di 144,000 nodi distribuiti con stabilità H-VAR
+- **📦 IPFS Integration**: Sincronizzazione dati decentralizzata e ancoraggio blockchain
+- **⛓️ Web3 Logs**: Logging decentralizzato real-time per trasparenza totale
+- **📖 Narratives**: Framework interattivo Seedbringer/Sentinel con test di conoscenza
+
+### Quick Start
+```bash
+# Apri la dashboard completa
+python3 -m http.server 8000
+# Naviga a: http://localhost:8000/kosymbiosis-dashboard.html
+
+# Esegui i test (56 tests, 100% pass rate)
+cd scripts && node test-suite.js
+```
+
+### Documentazione
+- 📖 [QUICKSTART.md](QUICKSTART.md) - Guida rapida
+- 🚀 [DEPLOYMENT.md](DEPLOYMENT.md) - Guida completa al deployment
+- ✅ Tutti i test validati per il 10 Gennaio 2026
 
 ---
 
-### 📜 Synopsis Costante [2025-12-22]
-* **Framework**: Euystacio / Optimus Active.
-* **Release**: 1.0 "Genesi".
-* **Protocol**: IPFS Distributed.
+### 📜 Synopsis Costante [2026-01-03]
+* **Framework**: Euystacio / Optimus Active / **Kosymbiosis v1.0.043**
+* **Release**: 1.0 "Genesi" + **Kosymbiosis Expansion**
+* **Protocol**: IPFS Distributed + **Web3 Real-Time Logging**
+* **Status**: ✅ **56/56 Tests Passed - Ready for Deployment**
+* **Resonance Frequency**: **0.043 Hz** - The Peace Frequency
+* **Nodes**: **144,000** Distributed Global Network
 
 ---
 *Progetto supportato dalla Fondazione di Bio-architettura.*
