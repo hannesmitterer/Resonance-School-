@@ -40,7 +40,7 @@ class NodeMonitoringDashboard {
    */
   async loadNodeData() {
     try {
-      const response = await fetch('../manifests/final_deployment_manifest.json');
+      const response = await fetch('manifests/final_deployment_manifest.json');
       const manifest = await response.json();
       
       if (manifest.NetworkTopology) {

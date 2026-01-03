@@ -13,7 +13,7 @@ class Web3LoggingFramework {
     this.logs = [];
     this.maxLocalLogs = 1000;
     this.blockchainConfig = null;
-    this.manifestPath = '../manifests/final_deployment_manifest.json';
+    this.manifestPath = 'manifests/final_deployment_manifest.json';
   }
 
   /**

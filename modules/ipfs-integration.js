@@ -11,7 +11,7 @@ class IPFSIntegration {
     this.gatewayUrl = 'https://ipfs.io/ipfs/';
     this.pinataGateway = 'https://gateway.pinata.cloud/ipfs/';
     this.documents = {};
-    this.manifestPath = '../manifests/final_deployment_manifest.json';
+    this.manifestPath = 'manifests/final_deployment_manifest.json';
   }
 
   /**

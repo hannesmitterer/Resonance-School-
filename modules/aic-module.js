@@ -13,7 +13,7 @@ class AICModule {
   constructor() {
     this.version = '1.0.043';
     this.resonanceFrequency = 0.043; // Hz
-    this.manifestPath = '../manifests/final_deployment_manifest.json';
+    this.manifestPath = 'manifests/final_deployment_manifest.json';
     this.manifest = null;
     this.ethicalDrift = 0.0;
     this.lastUpdate = null;
