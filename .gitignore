@@ -1,0 +1,58 @@
+# Kosymbiosis Framework - Git Ignore
+
+# Development directories
+node_modules/
+.cache/
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts (if any)
+*.min.js
+*.min.css
+
+# Private keys and secrets
+*.pem
+*.key
+private/
+secrets/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Testing
+coverage/
+.nyc_output/
+
+# Optional: Keep these if you want to include them
+# For now, we include all documented files
+
+# Backup files
+*.bak
+*.backup
+*~.nib
