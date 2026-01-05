@@ -1,0 +1,7 @@
+{
+  "resonance_target": {
+    "uvi_min": 40,
+    "uvi_max": 50
+  },
+  "validation_logic": "baseline"
+}
