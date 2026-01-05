@@ -11,7 +11,7 @@ import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, Tuple
 
 
 class APEEngine:
@@ -26,7 +26,6 @@ class APEEngine:
         """
         self.config_path = Path(config_path)
         self.config = self._load_config()
-        self.validation_results = []
         
     def _load_config(self) -> Dict:
         """Load configuration from school_params.json."""
