@@ -830,6 +830,10 @@
                 <h3 class="text-sm font-bold uppercase tracking-widest text-resonance mb-4">Resonance Metrics</h3>
                 <div class="space-y-4">
                     <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">UVI Stability</span>
+                        <span id="uvi-stability" class="text-3xl font-mono text-resonance">--.--%</span>
+                    </div>
+                    <div>
                         <span class="text-gray-500 block text-xs uppercase font-bold">Frequenza H-VAR</span>
                         <span class="text-3xl font-mono frequenza-viva">0.043 Hz</span>
                     </div>
@@ -848,6 +852,10 @@
             <div class="p-6 rounded-2xl bg-[#111] border border-gray-800">
                 <h3 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">System Status</h3>
                 <div class="space-y-4">
+                    <div>
+                        <span class="text-gray-500 block text-xs uppercase font-bold">APE Validation</span>
+                        <span id="ape-status" class="inline-block mt-2 px-3 py-1 bg-gray-900 text-gray-400 rounded-full text-xs">LOADING...</span>
+                    </div>
                     <div>
                         <span class="text-gray-500 block text-xs uppercase font-bold">G-CSI (Symbiosis)</span>
                         <span class="text-3xl font-mono text-white">0.945</span>
@@ -1087,12 +1095,93 @@
             }
         });
         
+        // APE Engine Integration - Load validation_report.json
+        async function loadValidationReport() {
+            try {
+                const response = await fetch('validation_report.json');
+                if (!response.ok) {
+                    console.log('⚠️ validation_report.json not found - using default values');
+                    const apeStatus = document.getElementById('ape-status');
+                    if (apeStatus) {
+                        apeStatus.textContent = 'NOT AVAILABLE';
+                        apeStatus.className = 'inline-block mt-2 px-3 py-1 bg-yellow-900 text-yellow-300 rounded-full text-xs';
+                    }
+                    return null;
+                }
+                
+                const report = await response.json();
+                console.log('✅ APE Engine Validation Report Loaded:', report);
+                
+                // Update APE validation status badge
+                const status = report.overall_status || 'UNKNOWN';
+                const apeStatus = document.getElementById('ape-status');
+                if (apeStatus) {
+                    apeStatus.textContent = status;
+                    if (status === 'PASSED') {
+                        apeStatus.className = 'inline-block mt-2 px-3 py-1 bg-green-900 text-green-300 rounded-full text-xs';
+                    } else {
+                        apeStatus.className = 'inline-block mt-2 px-3 py-1 bg-red-900 text-red-300 rounded-full text-xs';
+                    }
+                }
+                
+                // Update NSR Drift from validation report
+                if (report.nsr_validation && report.nsr_validation.drift_checks) {
+                    const latestDrift = report.nsr_validation.drift_checks[report.nsr_validation.drift_checks.length - 1];
+                    if (latestDrift) {
+                        const driftValue = latestDrift.drift;
+                        const driftElement = document.querySelector('.text-apollo-blue.text-3xl.font-mono');
+                        if (driftElement) {
+                            driftElement.textContent = `${driftValue.toFixed(3)}%`;
+                        }
+                        console.log(`📊 NSR Drift updated: ${driftValue}%`);
+                    }
+                }
+                
+                // Update UVI Stability metrics
+                if (report.uvi_validation && report.uvi_validation.summary) {
+                    const summary = report.uvi_validation.summary;
+                    const uviElement = document.getElementById('uvi-stability');
+                    if (uviElement) {
+                        uviElement.textContent = summary.stability_rate;
+                        // Color code based on stability
+                        const stablePercent = parseFloat(summary.stability_rate);
+                        if (stablePercent >= 100) {
+                            uviElement.classList.add('text-green-400');
+                        } else if (stablePercent >= 90) {
+                            uviElement.classList.add('text-yellow-400');
+                        } else {
+                            uviElement.classList.add('text-red-400');
+                        }
+                    }
+                    console.log(`🌊 UVI Stability: ${summary.stable_samples}/${summary.total_samples} (${summary.stability_rate})`);
+                }
+                
+                // Log validation status
+                const statusEmoji = status === 'PASSED' ? '✅' : '❌';
+                console.log(`${statusEmoji} APE Validation Status: ${status}`);
+                
+                return report;
+            } catch (error) {
+                console.log('⚠️ Could not load validation_report.json:', error.message);
+                const apeStatus = document.getElementById('ape-status');
+                if (apeStatus) {
+                    apeStatus.textContent = 'ERROR';
+                    apeStatus.className = 'inline-block mt-2 px-3 py-1 bg-red-900 text-red-300 rounded-full text-xs';
+                }
+                return null;
+            }
+        }
+        
         // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             initVectorBars();
             chat.init();
+            
+            // Load APE Engine validation report
+            await loadValidationReport();
+            
             console.log('✅ Apollo-Euystacio × Resonance School - System Initialized');
-            console.log('📊 NSR: 0.000% drift | OLF: 0.870 | G-CSI: 0.945');
+            console.log('📊 NSR: Live from APE Engine | OLF: 0.870 | G-CSI: 0.945');
             console.log('🌊 Resonance Frequency: 0.043 Hz | Nodes: 144,000');
         });
     </script>
