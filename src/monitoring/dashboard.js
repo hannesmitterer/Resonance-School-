@@ -262,21 +262,38 @@ class MonitoringDashboard {
                 return;
             }
 
-            const html = apis.map(api => \`
-                <div class="border-l-4 \${api.status === 'active' ? 'border-green-500' : 'border-red-500'} pl-4 py-2 mb-3">
+            const html = apis.map(api => {
+                // Escape HTML to prevent XSS
+                const escapeHtml = (str) => {
+                    const div = document.createElement('div');
+                    div.textContent = str;
+                    return div.innerHTML;
+                };
+                
+                const apiId = escapeHtml(api.id);
+                const apiUrl = escapeHtml(api.url);
+                const apiMethod = escapeHtml(api.method);
+                const apiStatus = escapeHtml(api.status);
+                const lastChecked = api.lastChecked ? escapeHtml(api.lastChecked) : 'Never';
+                const borderClass = api.status === 'active' ? 'border-green-500' : 'border-red-500';
+                const statusClass = api.status === 'active' ? 'status-healthy' : 'status-unhealthy';
+                
+                return \`
+                <div class="border-l-4 \${borderClass} pl-4 py-2 mb-3">
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-semibold">\${api.id}</p>
-                            <p class="text-sm text-gray-600">\${api.url}</p>
-                            <p class="text-xs text-gray-500">Method: \${api.method}</p>
+                            <p class="font-semibold">\${apiId}</p>
+                            <p class="text-sm text-gray-600">\${apiUrl}</p>
+                            <p class="text-xs text-gray-500">Method: \${apiMethod}</p>
                         </div>
-                        <span class="status-badge \${api.status === 'active' ? 'status-healthy' : 'status-unhealthy'}">
-                            \${api.status}
+                        <span class="status-badge \${statusClass}">
+                            \${apiStatus}
                         </span>
                     </div>
-                    <p class="text-xs text-gray-500 mt-1">Last checked: \${api.lastChecked || 'Never'}</p>
+                    <p class="text-xs text-gray-500 mt-1">Last checked: \${lastChecked}</p>
                 </div>
-            \`).join('');
+            \`;
+            }).join('');
 
             document.getElementById('api-list').innerHTML = html;
         }

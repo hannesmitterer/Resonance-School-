@@ -78,9 +78,13 @@ class SchemaValidator {
   /**
    * Infer schema from sample data
    * @param {Object} data - Sample data
+   * @param {Object} options - Inference options
+   * @param {boolean} options.allRequired - Mark all properties as required (default: false)
    * @returns {Object} - Inferred JSON schema
    */
-  inferSchema(data) {
+  inferSchema(data, options = {}) {
+    const { allRequired = false } = options;
+    
     const inferType = (value) => {
       if (value === null) return 'null';
       if (Array.isArray(value)) return 'array';
@@ -96,17 +100,28 @@ class SchemaValidator {
         
         for (const [key, value] of Object.entries(obj)) {
           properties[key] = buildSchema(value);
-          required.push(key);
+          // Only mark as required if explicitly requested
+          if (allRequired) {
+            required.push(key);
+          }
         }
         
-        return {
+        const schema = {
           type: 'object',
-          properties,
-          required
+          properties
         };
+        
+        // Only add required field if there are required properties
+        if (required.length > 0) {
+          schema.required = required;
+        }
+        
+        return schema;
       }
       
       if (type === 'array' && obj.length > 0) {
+        // Note: This only analyzes the first element for simplicity
+        // For complex schemas, provide explicit schema instead
         return {
           type: 'array',
           items: buildSchema(obj[0])
@@ -117,7 +132,7 @@ class SchemaValidator {
     };
 
     const schema = buildSchema(data);
-    logger.info('Schema inferred from data');
+    logger.info('Schema inferred from data', { allRequired });
     return schema;
   }
 
