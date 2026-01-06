@@ -34,6 +34,40 @@ Il sistema monitora in tempo reale:
 2.  **Iscrizione**: Utilizza il modulo di *Enrollment* per generare il tuo ID crittografico.
 3.  **Biblioteca**: Esplora i contenuti sigillati su IPFS.
 
+## 🔄 Automated Data Integration System (NEW)
+
+The Resonance School now includes a fully automated live data integration system with:
+
+### Features
+- 🔍 **API Discovery**: Auto-detection and validation of data sources using OpenAPI specs
+- ⚡ **Real-Time Streaming**: WebSocket and REST polling for continuous data ingestion
+- 💾 **IPFS Storage**: Immutable, version-controlled data storage with CID management
+- 🔧 **Self-Healing**: Automated recovery workflows for failed pipelines
+- 📊 **Monitoring Dashboard**: Real-time visualization with Prometheus metrics and Grafana support
+
+### Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env
+
+# Start IPFS daemon (required)
+ipfs daemon
+
+# Run the system
+npm start
+```
+
+**Access Points:**
+- Dashboard: `http://localhost:3000/dashboard`
+- Metrics: `http://localhost:3000/metrics`
+- Example: `node example.js`
+
+For detailed documentation, see [DATA_INTEGRATION_GUIDE.md](DATA_INTEGRATION_GUIDE.md)
+
 ---
 
 ### 📜 Synopsis Costante [2025-12-22]
