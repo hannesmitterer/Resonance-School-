@@ -90,7 +90,9 @@ class GenesisCertificate {
         
         const dataString = JSON.stringify(stateData);
         
-        // Simulate SHA3-512 hash (in production, use actual crypto library)
+        // NOTE: This is a SIMULATION for demonstration purposes.
+        // In production, use a proper cryptographic library (e.g., crypto-js, noble-hashes)
+        // to generate a real SHA3-512 hash.
         let hash = 'SHA3-512:';
         for (let i = 0; i < dataString.length; i++) {
             const charCode = dataString.charCodeAt(i);
@@ -204,6 +206,8 @@ class GenesisCertificate {
         console.log(`  ✓ Root Hash: ${this.certificate.rootHash.substring(0, 50)}...`);
         
         // 3. Simulate blockchain anchoring
+        // NOTE: This is a SIMULATION. In production, this would interact with
+        // actual Ethereum mainnet via web3.js to get the real block number.
         this.certificate.blockNumber = 18500000 + Math.floor(Math.random() * 50000);
         console.log(`  ✓ Block Number: ${this.certificate.blockNumber}`);
         
