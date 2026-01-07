@@ -822,6 +822,9 @@
         // VBS (Vacuum Backup System) Functions
         // ═══════════════════════════════════════════════════════
         
+        const MAX_LOG_ENTRIES = 50;
+        let vbsUpdateInterval = null;
+        
         function activateVBS() {
             if (vbs) {
                 alert('⚠️ VBS already activated');
@@ -859,13 +862,22 @@
                 vbs.stopHeartbeat();
                 document.getElementById('vbs-heartbeat-btn').textContent = '💓 Start Heartbeat';
                 addVBSLog('⏸️ Heartbeat stopped', 'warning');
+                
+                // Clear update interval
+                if (vbsUpdateInterval) {
+                    clearInterval(vbsUpdateInterval);
+                    vbsUpdateInterval = null;
+                }
             } else {
                 vbs.startHeartbeat();
                 document.getElementById('vbs-heartbeat-btn').textContent = '⏸️ Stop Heartbeat';
                 addVBSLog('💓 Continuous heartbeat started', 'success');
                 
-                // Update UI periodically
-                setInterval(() => {
+                // Update UI periodically (clear any existing interval first)
+                if (vbsUpdateInterval) {
+                    clearInterval(vbsUpdateInterval);
+                }
+                vbsUpdateInterval = setInterval(() => {
                     if (vbs && vbs.status.heartbeatRunning) {
                         updateVBSStatus();
                     }
@@ -967,8 +979,8 @@
             
             logContainer.insertBefore(logEntry, logContainer.firstChild);
             
-            // Keep only last 50 entries
-            while (logContainer.children.length > 50) {
+            // Keep only last MAX_LOG_ENTRIES entries
+            while (logContainer.children.length > MAX_LOG_ENTRIES) {
                 logContainer.removeChild(logContainer.lastChild);
             }
         }

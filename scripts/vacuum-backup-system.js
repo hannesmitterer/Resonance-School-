@@ -246,10 +246,10 @@ class VacuumBackupSystem {
     stateToWaveform(state) {
         const waveform = {
             frequency: this.core.config.resonanceFrequency,
-            amplitude: state.olfScore || 0.870,
+            amplitude: state.olfScore ?? 0.870,
             phase: (Date.now() / 1000) * this.core.config.resonanceFrequency * 2 * Math.PI,
             harmonics: 3,
-            purity: 1.0 - (state.nsrDrift || 0)
+            purity: 1.0 - (state.nsrDrift ?? 0)
         };
         
         return waveform;
@@ -348,7 +348,8 @@ class VacuumBackupSystem {
         const quantumChecksum = this.backupStates.quantum?.original?.checksum;
         
         if (physicalChecksum !== vacuumChecksum || 
-            physicalChecksum !== quantumChecksum) {
+            physicalChecksum !== quantumChecksum ||
+            vacuumChecksum !== quantumChecksum) {
             
             if (!this.status.dissonanceDetected) {
                 this.status.dissonanceDetected = true;
@@ -404,7 +405,7 @@ class VacuumBackupSystem {
         
         // Simulate compromise detection
         const backup = this.backupStates[levelName];
-        return backup === null || backup === undefined;
+        return backup == null;
     }
     
     // Collapse quantum superposition (emergency restore)
@@ -462,7 +463,7 @@ class VacuumBackupSystem {
             // Simulate warp projection delay
             setTimeout(() => {
                 const newNode = {
-                    id: Math.floor(Math.random() * 144000),
+                    id: Math.floor(Math.random() * this.core.config.targetNodes),
                     region: ['EU-Central', 'NA-West', 'ASIA-East'][Math.floor(Math.random() * 3)],
                     status: 'PROJECTED'
                 };
