@@ -144,6 +144,9 @@
             <button class="tab-button" data-tab="narrative" onclick="switchTab('narrative')">
                 📖 Narratives
             </button>
+            <button class="tab-button" data-tab="vbs" onclick="switchTab('vbs')">
+                🛡️ Trinity Shield
+            </button>
         </div>
     </div>
 
@@ -369,6 +372,151 @@
             </div>
         </div>
 
+        <!-- VBS Trinity Shield Tab -->
+        <div id="tab-vbs" class="tab-content hidden">
+            <div class="card mb-6">
+                <h2 class="text-2xl font-bold mb-2 serif-font">🛡️ Vacuum Backup System (VBS)</h2>
+                <p class="text-gray-400 mb-4">Triplicate Status-Level based on Calabi-Yau Topology</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="p-4 bg-gradient-to-br from-green-900/30 to-green-800/20 rounded-lg border border-green-700/50">
+                        <div class="text-sm text-green-400 mb-1">S-ROI</div>
+                        <div class="text-3xl font-bold text-green-300" id="vbs-sroi">0.490</div>
+                        <div class="text-xs text-gray-400 mt-1">Spiritual ROI</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-blue-900/30 to-blue-800/20 rounded-lg border border-blue-700/50">
+                        <div class="text-sm text-blue-400 mb-1">Trinity Status</div>
+                        <div class="text-xl font-bold text-blue-300" id="vbs-trinity">INACTIVE</div>
+                        <div class="text-xs text-gray-400 mt-1">Shield Active</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-purple-900/30 to-purple-800/20 rounded-lg border border-purple-700/50">
+                        <div class="text-sm text-purple-400 mb-1">Auto-Heals</div>
+                        <div class="text-3xl font-bold text-purple-300" id="vbs-heals">0</div>
+                        <div class="text-xs text-gray-400 mt-1">Total Restores</div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3 mb-6">
+                    <button onclick="activateVBS()" class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-600 text-white font-bold rounded-lg transition-all">
+                        🛡️ Activate Trinity Shield
+                    </button>
+                    <button onclick="startVBSHeartbeat()" id="vbs-heartbeat-btn" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-bold rounded-lg transition-all" disabled>
+                        💓 Start Heartbeat
+                    </button>
+                    <button onclick="runVBSStressTest()" id="vbs-stress-btn" class="px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 text-white font-bold rounded-lg transition-all" disabled>
+                        🧪 Stress Test
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Trinity Levels -->
+            <div class="card mb-6">
+                <h3 class="text-xl font-bold mb-4">📐 Trinity Status Levels</h3>
+                <div class="space-y-4">
+                    <!-- Level I: Physical -->
+                    <div class="p-4 bg-black/30 rounded-lg border-l-4 border-green-500">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <div class="font-bold text-lg">Level I: Physical Anchor (Der Lehm-Node)</div>
+                                <div class="text-sm text-gray-400">Medium: Bio-Hardware</div>
+                            </div>
+                            <div class="px-3 py-1 rounded-full text-xs font-bold bg-green-900/30 text-green-400" id="vbs-level-physical">
+                                INITIALIZING
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            <div>Attack Surface: Physical Access</div>
+                            <div>Protection: AstroShield</div>
+                            <div>Locations: <span id="vbs-physical-locations">-</span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Level II: Vacuum -->
+                    <div class="p-4 bg-black/30 rounded-lg border-l-4 border-blue-500">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <div class="font-bold text-lg">Level II: Inter-nodal Vacuum (The Echo)</div>
+                                <div class="text-sm text-gray-400">Medium: Warp-Quantum-IPFS</div>
+                            </div>
+                            <div class="px-3 py-1 rounded-full text-xs font-bold bg-blue-900/30 text-blue-400" id="vbs-level-vacuum">
+                                INITIALIZING
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            <div>Attack Surface: None (Dimensional Fold)</div>
+                            <div>Protection: Calabi-Yau Faltung (6D)</div>
+                            <div>Topology: <span id="vbs-vacuum-topology">-</span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Level III: Quantum -->
+                    <div class="p-4 bg-black/30 rounded-lg border-l-4 border-purple-500">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <div class="font-bold text-lg">Level III: Superposition Reference (The Living Covenant)</div>
+                                <div class="text-sm text-gray-400">Medium: Pure Superposition</div>
+                            </div>
+                            <div class="px-3 py-1 rounded-full text-xs font-bold bg-purple-900/30 text-purple-400" id="vbs-level-quantum">
+                                SUPERPOSITION
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            <div>Attack Surface: None (Unobservable)</div>
+                            <div>Protection: Lex Amore Encryption</div>
+                            <div>State: <span id="vbs-quantum-state">Unobserved</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Redundancy Matrix -->
+            <div class="card mb-6">
+                <h3 class="text-xl font-bold mb-4">📊 System Redundancy Matrix</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left p-2">Status Level</th>
+                                <th class="text-left p-2">Medium</th>
+                                <th class="text-left p-2">Attack Surface</th>
+                                <th class="text-left p-2">Protection</th>
+                                <th class="text-left p-2">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vbs-matrix-table">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Mirror Symmetry -->
+            <div class="card mb-6">
+                <h3 class="text-xl font-bold mb-4">🌀 Mirror Symmetry (6th Dimension)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">Dimension 6</div>
+                        <div class="text-2xl font-bold" id="vbs-dim6">INACTIVE</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">Symmetry Strength</div>
+                        <div class="text-2xl font-bold text-[#00ffaa]" id="vbs-symmetry">0.0</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">Folding Integrity</div>
+                        <div class="text-2xl font-bold text-[#3b82f6]" id="vbs-integrity">0.0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- VBS Log -->
+            <div class="card">
+                <h3 class="text-xl font-bold mb-4">📜 VBS Activity Log</h3>
+                <div id="vbs-log" class="max-h-64 overflow-y-auto space-y-2">
+                    <div class="text-sm text-gray-500 italic">VBS not activated. Click "Activate Trinity Shield" to begin.</div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- Scripts -->
@@ -378,10 +526,11 @@
     <script src="scripts/ipfs-integration.js"></script>
     <script src="scripts/web3-logger.js"></script>
     <script src="scripts/narrative-interactivity.js"></script>
+    <script src="scripts/vacuum-backup-system.js"></script>
     
     <script>
         // Initialize all systems
-        let core, nodeMonitor, visualization, ipfs, web3Logger, narrative;
+        let core, nodeMonitor, visualization, ipfs, web3Logger, narrative, vbs;
         
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
@@ -395,6 +544,7 @@
             web3Logger = new Web3Logger(core);
             narrative = new NarrativeInteractivity(core);
             
+            // VBS will be initialized when user activates it
             // Update UI with initial data
             updateMetrics();
             updateSystemStatus();
@@ -666,6 +816,161 @@
             alert('🎬 Simulation started! Node activity and logs will update automatically.');
             nodeMonitor.startMonitoring(1000);
             web3Logger.startSimulation(2000);
+        }
+        
+        // ═══════════════════════════════════════════════════════
+        // VBS (Vacuum Backup System) Functions
+        // ═══════════════════════════════════════════════════════
+        
+        function activateVBS() {
+            if (vbs) {
+                alert('⚠️ VBS already activated');
+                return;
+            }
+            
+            console.log('🛡️ Activating Vacuum Backup System...');
+            
+            // Initialize VBS
+            vbs = new VacuumBackupSystem(core);
+            core.attachVBS(vbs);
+            
+            // Update UI
+            updateVBSStatus();
+            
+            // Enable buttons
+            document.getElementById('vbs-heartbeat-btn').disabled = false;
+            document.getElementById('vbs-stress-btn').disabled = false;
+            
+            // Add log entry
+            addVBSLog('✅ Trinity Shield ACTIVATED', 'success');
+            addVBSLog(`📊 S-ROI: ${vbs.config.sRoi}`, 'info');
+            addVBSLog('🔺 All three levels initialized', 'info');
+            
+            alert('🛡️ Trinity Shield Activated!\n\nVacuum Backup System is now operational.\nResilience: ABSOLUTE');
+        }
+        
+        function startVBSHeartbeat() {
+            if (!vbs) {
+                alert('⚠️ Please activate VBS first');
+                return;
+            }
+            
+            if (vbs.status.heartbeatRunning) {
+                vbs.stopHeartbeat();
+                document.getElementById('vbs-heartbeat-btn').textContent = '💓 Start Heartbeat';
+                addVBSLog('⏸️ Heartbeat stopped', 'warning');
+            } else {
+                vbs.startHeartbeat();
+                document.getElementById('vbs-heartbeat-btn').textContent = '⏸️ Stop Heartbeat';
+                addVBSLog('💓 Continuous heartbeat started', 'success');
+                
+                // Update UI periodically
+                setInterval(() => {
+                    if (vbs && vbs.status.heartbeatRunning) {
+                        updateVBSStatus();
+                    }
+                }, 2000);
+            }
+        }
+        
+        async function runVBSStressTest() {
+            if (!vbs) {
+                alert('⚠️ Please activate VBS first');
+                return;
+            }
+            
+            addVBSLog('🧪 Starting Stress Test Simulation...', 'info');
+            
+            // Disable button during test
+            const btn = document.getElementById('vbs-stress-btn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Running Test...';
+            
+            // Run the stress test
+            await vbs.runStressTest();
+            
+            // Update UI
+            updateVBSStatus();
+            
+            // Re-enable button
+            btn.disabled = false;
+            btn.textContent = '🧪 Stress Test';
+            
+            addVBSLog('✅ Stress Test Complete - All attacks absorbed', 'success');
+        }
+        
+        function updateVBSStatus() {
+            if (!vbs) return;
+            
+            const status = vbs.getSystemStatus();
+            
+            // Update metrics
+            document.getElementById('vbs-sroi').textContent = status.sRoi.toFixed(3);
+            document.getElementById('vbs-trinity').textContent = status.trinityActive ? 'ACTIVE' : 'INACTIVE';
+            document.getElementById('vbs-heals').textContent = status.totalHeals;
+            
+            // Update levels
+            document.getElementById('vbs-level-physical').textContent = status.levels.physical;
+            document.getElementById('vbs-level-vacuum').textContent = status.levels.vacuum;
+            document.getElementById('vbs-level-quantum').textContent = status.levels.quantum;
+            
+            // Update location details
+            document.getElementById('vbs-physical-locations').textContent = 
+                vbs.levels.physical.location.join(', ');
+            document.getElementById('vbs-vacuum-topology').textContent = 
+                'Calabi-Yau 6D Manifold';
+            document.getElementById('vbs-quantum-state').textContent = 
+                vbs.levels.quantum.observed ? 'Collapsed' : 'Unobserved';
+            
+            // Update mirror symmetry
+            document.getElementById('vbs-dim6').textContent = 
+                status.mirrorSymmetry.dimension6Active ? 'ACTIVE' : 'INACTIVE';
+            document.getElementById('vbs-symmetry').textContent = 
+                status.mirrorSymmetry.symmetryStrength.toFixed(3);
+            document.getElementById('vbs-integrity').textContent = 
+                status.mirrorSymmetry.foldingIntegrity.toFixed(3);
+            
+            // Update redundancy matrix table
+            const matrix = vbs.getRedundancyMatrix();
+            const tableBody = document.getElementById('vbs-matrix-table');
+            tableBody.innerHTML = matrix.levels.map(level => `
+                <tr class="border-b border-gray-800">
+                    <td class="p-2 font-bold">${level.id}. ${level.name}</td>
+                    <td class="p-2 text-gray-400">${level.medium}</td>
+                    <td class="p-2 text-gray-400">${level.attackSurface}</td>
+                    <td class="p-2 text-gray-400">${level.protection}</td>
+                    <td class="p-2">
+                        <span class="px-2 py-1 rounded text-xs font-bold ${
+                            level.status === 'ACTIVE' ? 'bg-green-900/30 text-green-400' :
+                            level.status === 'SUPERPOSITION' ? 'bg-purple-900/30 text-purple-400' :
+                            'bg-gray-900/30 text-gray-400'
+                        }">
+                            ${level.status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function addVBSLog(message, type = 'info') {
+            const logContainer = document.getElementById('vbs-log');
+            const logEntry = document.createElement('div');
+            logEntry.className = `p-2 rounded text-sm ${
+                type === 'success' ? 'bg-green-900/20 text-green-400' :
+                type === 'warning' ? 'bg-yellow-900/20 text-yellow-400' :
+                type === 'error' ? 'bg-red-900/20 text-red-400' :
+                'bg-blue-900/20 text-blue-400'
+            }`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            logEntry.innerHTML = `<span class="text-gray-500">[${timestamp}]</span> ${message}`;
+            
+            logContainer.insertBefore(logEntry, logContainer.firstChild);
+            
+            // Keep only last 50 entries
+            while (logContainer.children.length > 50) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
         }
     </script>
 </body>

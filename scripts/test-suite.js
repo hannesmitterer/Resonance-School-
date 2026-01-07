@@ -29,6 +29,7 @@ class KosymbiosisTestSuite {
         await this.testWeb3Logger();
         await this.testNarrativeInteractivity();
         await this.testResonanceSync();
+        await this.testVacuumBackupSystem();
         await this.testSystemIntegration();
         
         this.endTime = Date.now();
@@ -486,6 +487,129 @@ class KosymbiosisTestSuite {
         }
     }
 
+    async testVacuumBackupSystem() {
+        console.log('\n🧪 Testing Vacuum Backup System (VBS)...');
+        
+        try {
+            const core = new KosymbiosisCore();
+            const vbs = new VacuumBackupSystem(core);
+            
+            // Test 1: Trinity Shield initialization
+            this.assert(
+                vbs.status.trinityActive === true,
+                'VBS: Trinity Shield should be active after initialization'
+            );
+            
+            // Test 2: S-ROI configuration
+            this.assert(
+                vbs.config.sRoi === 0.490,
+                'VBS: S-ROI should be 0.490'
+            );
+            
+            // Test 3: All three levels initialized
+            this.assert(
+                vbs.levels.physical.state === 'ACTIVE',
+                'VBS: Physical level should be ACTIVE'
+            );
+            
+            this.assert(
+                vbs.levels.vacuum.state === 'ACTIVE',
+                'VBS: Vacuum level should be ACTIVE'
+            );
+            
+            this.assert(
+                vbs.levels.quantum.state === 'SUPERPOSITION',
+                'VBS: Quantum level should be in SUPERPOSITION'
+            );
+            
+            // Test 4: Calabi-Yau topology
+            this.assert(
+                vbs.config.dimensionalFolds === 6,
+                'VBS: Should have 6 dimensional folds (Calabi-Yau)'
+            );
+            
+            this.assert(
+                vbs.levels.vacuum.calabiYauManifold === true,
+                'VBS: Vacuum level should use Calabi-Yau manifold'
+            );
+            
+            // Test 5: Backup states captured
+            this.assert(
+                vbs.backupStates.physical !== null,
+                'VBS: Physical backup state should be captured'
+            );
+            
+            this.assert(
+                vbs.backupStates.vacuum !== null,
+                'VBS: Vacuum backup state should be captured'
+            );
+            
+            this.assert(
+                vbs.backupStates.quantum !== null,
+                'VBS: Quantum backup state should be captured'
+            );
+            
+            // Test 6: Heartbeat functionality
+            vbs.startHeartbeat();
+            this.assert(
+                vbs.status.heartbeatRunning === true,
+                'VBS: Heartbeat should be running'
+            );
+            
+            await this.sleep(2000);
+            
+            this.assert(
+                vbs.status.uptime > 0,
+                'VBS: Uptime should increase with heartbeat'
+            );
+            
+            vbs.stopHeartbeat();
+            
+            // Test 7: Mirror symmetry
+            this.assert(
+                vbs.mirrorSymmetry.dimension6Active === true,
+                'VBS: 6th dimension should be active'
+            );
+            
+            // Test 8: Redundancy matrix
+            const matrix = vbs.getRedundancyMatrix();
+            this.assert(
+                matrix.levels.length === 3,
+                'VBS: Redundancy matrix should have 3 levels'
+            );
+            
+            // Test 9: System status
+            const status = vbs.getSystemStatus();
+            this.assert(
+                status.resilience === 'ABSOLUTE',
+                'VBS: Resilience should be ABSOLUTE'
+            );
+            
+            // Test 10: Mandate multilingual
+            const mandate = vbs.getMandate();
+            this.assert(
+                mandate.IT && mandate.DE && mandate.EN,
+                'VBS: Mandate should be available in IT, DE, and EN'
+            );
+            
+            // Test 11: Auto-heal simulation
+            const originalBackup = vbs.backupStates.physical;
+            vbs.backupStates.physical = null; // Simulate compromise
+            
+            await vbs.initiateAutoHeal();
+            
+            this.assert(
+                vbs.status.totalHeals > 0,
+                'VBS: Should perform auto-heal when compromised'
+            );
+            
+            console.log('✅ Vacuum Backup System tests completed');
+            
+        } catch (error) {
+            this.fail('VBS test suite failed: ' + error.message);
+        }
+    }
+
     async testSystemIntegration() {
         console.log('\n🧪 Testing System Integration...');
         
@@ -640,6 +764,7 @@ if (typeof window === 'undefined' && typeof require !== 'undefined') {
     const IPFSIntegration = require('./ipfs-integration.js');
     const Web3Logger = require('./web3-logger.js');
     const NarrativeInteractivity = require('./narrative-interactivity.js');
+    const VacuumBackupSystem = require('./vacuum-backup-system.js');
     
     // Make them globally available for tests
     global.KosymbiosisCore = KosymbiosisCore;
@@ -648,6 +773,7 @@ if (typeof window === 'undefined' && typeof require !== 'undefined') {
     global.IPFSIntegration = IPFSIntegration;
     global.Web3Logger = Web3Logger;
     global.NarrativeInteractivity = NarrativeInteractivity;
+    global.VacuumBackupSystem = VacuumBackupSystem;
     
     (async () => {
         const testSuite = new KosymbiosisTestSuite();

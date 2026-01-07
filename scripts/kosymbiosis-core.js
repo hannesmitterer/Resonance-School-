@@ -238,8 +238,30 @@ class KosymbiosisCore {
             state: this.state,
             health: this.getSystemHealth(),
             capital: this.getCapitalStatus(),
-            seedbringer: this.getSeedbringerStatus()
+            seedbringer: this.getSeedbringerStatus(),
+            vbs: this.vbsEnabled ? this.vbs?.getSystemStatus() : null
         };
+    }
+    
+    // Enable Vacuum Backup System (VBS)
+    enableVBS() {
+        if (this.vbsEnabled) {
+            console.log('⚠️ VBS already enabled');
+            return this.vbs;
+        }
+        
+        // VBS will be initialized externally and attached
+        this.vbsEnabled = true;
+        console.log('🛡️ VBS enabled on Kosymbiosis Core');
+        
+        return true;
+    }
+    
+    // Attach VBS instance
+    attachVBS(vbsInstance) {
+        this.vbs = vbsInstance;
+        this.vbsEnabled = true;
+        console.log('🛡️ VBS instance attached to core');
     }
 }
 
