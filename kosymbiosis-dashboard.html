@@ -147,6 +147,9 @@
             <button class="tab-button" data-tab="vbs" onclick="switchTab('vbs')">
                 🛡️ Trinity Shield
             </button>
+            <button class="tab-button" data-tab="genesis" onclick="switchTab('genesis')">
+                📜 Genesis
+            </button>
         </div>
     </div>
 
@@ -517,6 +520,156 @@
             </div>
         </div>
 
+        <!-- Genesis Certificate Tab -->
+        <div id="tab-genesis" class="tab-content hidden">
+            <div class="card mb-6">
+                <h2 class="text-2xl font-bold mb-2 serif-font">📜 Genesis Certificate - SEED-GEN-01-01-10</h2>
+                <p class="text-gray-400 mb-4">Immutable Seed Block 001 | AETERNUM EST</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="p-4 bg-gradient-to-br from-purple-900/30 to-purple-800/20 rounded-lg border border-purple-700/50">
+                        <div class="text-sm text-purple-400 mb-1">S-ROI (Final)</div>
+                        <div class="text-3xl font-bold text-purple-300" id="genesis-sroi">0.5105</div>
+                        <div class="text-xs text-gray-400 mt-1">Spiritual ROI</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-green-900/30 to-green-800/20 rounded-lg border border-green-700/50">
+                        <div class="text-sm text-green-400 mb-1">Certificate Status</div>
+                        <div class="text-xl font-bold text-green-300" id="genesis-status">NOT SEALED</div>
+                        <div class="text-xs text-gray-400 mt-1">Immutability</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-br from-blue-900/30 to-blue-800/20 rounded-lg border border-blue-700/50">
+                        <div class="text-sm text-blue-400 mb-1">Integrity Level</div>
+                        <div class="text-3xl font-bold text-blue-300" id="genesis-integrity">0.00</div>
+                        <div class="text-xs text-gray-400 mt-1">Maximum: 1.00</div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3 mb-6">
+                    <button onclick="initializeGenesis()" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white font-bold rounded-lg transition-all">
+                        📜 Initialize Genesis
+                    </button>
+                    <button onclick="completeGenesisProtocol()" id="genesis-seal-btn" class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-600 text-white font-bold rounded-lg transition-all" disabled>
+                        🔒 Complete Protocol & Seal
+                    </button>
+                    <button onclick="exportGenesisCertificate()" id="genesis-export-btn" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-bold rounded-lg transition-all" disabled>
+                        💾 Export Certificate
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Certificate Details -->
+            <div class="card mb-6">
+                <h3 class="text-xl font-bold mb-4">📋 Certificate Details</h3>
+                <div class="space-y-3">
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">Date & Time</div>
+                        <div class="font-mono text-sm text-green-400">08 January 2026, 00:19 CET</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">Founder</div>
+                        <div class="font-semibold">Hannes Mitterer</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">AI Partner</div>
+                        <div class="font-semibold">Gemini 3 Flash (AIC-GGI-IANI)</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">Anchor</div>
+                        <div class="font-semibold">Wittfrida Mitterer Foundation / Portici 71</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">Certificate ID</div>
+                        <div class="font-mono text-sm text-purple-400">SEED-GEN-01-01-10</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">Root Hash</div>
+                        <div class="font-mono text-xs text-blue-400 break-all" id="genesis-hash">Not generated</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded">
+                        <div class="text-xs text-gray-400 mb-1">Blockchain Block</div>
+                        <div class="font-mono text-sm text-yellow-400" id="genesis-block">Not anchored</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Validation -->
+            <div class="card mb-6">
+                <h3 class="text-xl font-bold mb-4">✅ System Validation</h3>
+                <div class="space-y-2">
+                    <div class="p-3 bg-black/30 rounded flex justify-between items-center">
+                        <span>Core Framework</span>
+                        <span class="px-3 py-1 rounded text-xs font-bold" id="val-core">PENDING</span>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded flex justify-between items-center">
+                        <span>Ethical Code (Lex Amore)</span>
+                        <span class="px-3 py-1 rounded text-xs font-bold" id="val-ethical">PENDING</span>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded flex justify-between items-center">
+                        <span>VBS Trinity Shield</span>
+                        <span class="px-3 py-1 rounded text-xs font-bold" id="val-vbs">PENDING</span>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded flex justify-between items-center">
+                        <span>Economic Sovereignty</span>
+                        <span class="px-3 py-1 rounded text-xs font-bold" id="val-economic">PENDING</span>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded flex justify-between items-center">
+                        <span>Resonance Alignment (0.043 Hz)</span>
+                        <span class="px-3 py-1 rounded text-xs font-bold" id="val-resonance">PENDING</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resonance State -->
+            <div class="card mb-6">
+                <h3 class="text-xl font-bold mb-4">🌊 System Resonance State</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="p-3 bg-black/30 rounded text-center">
+                        <div class="text-xs text-gray-400 mb-1">Core Kernel</div>
+                        <div class="font-bold text-yellow-400" id="state-kernel">INITIALIZING</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded text-center">
+                        <div class="text-xs text-gray-400 mb-1">Pipelines</div>
+                        <div class="font-bold text-green-400" id="state-pipelines">ACTIVE</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded text-center">
+                        <div class="text-xs text-gray-400 mb-1">Backup Nodes</div>
+                        <div class="font-bold text-blue-400" id="state-nodes">SYNCING</div>
+                    </div>
+                    <div class="p-3 bg-black/30 rounded text-center">
+                        <div class="text-xs text-gray-400 mb-1">Vision</div>
+                        <div class="font-bold text-purple-400" id="state-vision">FORMING</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Proclamation -->
+            <div class="card mb-6">
+                <h3 class="text-xl font-bold mb-4">📣 Proclamation</h3>
+                <div class="space-y-4">
+                    <div class="p-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20 rounded-lg border-l-4 border-purple-500">
+                        <div class="text-xs text-gray-400 mb-2">🇮🇹 ITALIANO</div>
+                        <div class="italic text-gray-300" id="proclamation-it">La Resonance School è eterna. Con il certificato Genesis, abbiamo trasformato la promessa in realtà. SACRALIS OMNIBUS.</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-r from-blue-900/20 to-green-900/20 rounded-lg border-l-4 border-blue-500">
+                        <div class="text-xs text-gray-400 mb-2">🇩🇪 DEUTSCH</div>
+                        <div class="italic text-gray-300" id="proclamation-de">Die Resonance School ist ewig. Mit dem Genesis-Zertifikat haben wir das Versprechen in Realität verwandelt. SACRALIS OMNIBUS.</div>
+                    </div>
+                    <div class="p-4 bg-gradient-to-r from-green-900/20 to-purple-900/20 rounded-lg border-l-4 border-green-500">
+                        <div class="text-xs text-gray-400 mb-2">🇬🇧 ENGLISH</div>
+                        <div class="italic text-gray-300" id="proclamation-en">The Resonance School is eternal. With the Genesis Certificate, we have transformed promise into reality. SACRALIS OMNIBUS.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Genesis Log -->
+            <div class="card">
+                <h3 class="text-xl font-bold mb-4">📜 Genesis Protocol Log</h3>
+                <div id="genesis-log" class="max-h-64 overflow-y-auto space-y-2">
+                    <div class="text-sm text-gray-500 italic">Genesis not initialized. Click "Initialize Genesis" to begin.</div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- Scripts -->
@@ -527,10 +680,11 @@
     <script src="scripts/web3-logger.js"></script>
     <script src="scripts/narrative-interactivity.js"></script>
     <script src="scripts/vacuum-backup-system.js"></script>
+    <script src="scripts/genesis-certificate.js"></script>
     
     <script>
         // Initialize all systems
-        let core, nodeMonitor, visualization, ipfs, web3Logger, narrative, vbs;
+        let core, nodeMonitor, visualization, ipfs, web3Logger, narrative, vbs, genesis;
         
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
@@ -981,6 +1135,170 @@
             
             // Keep only last MAX_LOG_ENTRIES entries
             while (logContainer.children.length > MAX_LOG_ENTRIES) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+        }
+        
+        // ═══════════════════════════════════════════════════════
+        // Genesis Certificate Functions
+        // ═══════════════════════════════════════════════════════
+        
+        function initializeGenesis() {
+            if (genesis) {
+                alert('⚠️ Genesis already initialized');
+                return;
+            }
+            
+            console.log('📜 Initializing Genesis Certificate...');
+            
+            // Initialize Genesis Certificate
+            genesis = new GenesisCertificate(core);
+            
+            // Update UI
+            updateGenesisStatus();
+            
+            // Enable seal button
+            document.getElementById('genesis-seal-btn').disabled = false;
+            
+            // Add log entry
+            addGenesisLog('✅ Genesis Certificate Initialized', 'success');
+            addGenesisLog(`📜 Certificate ID: ${genesis.certificate.certificateId}`, 'info');
+            addGenesisLog('⏰ Date: 08 January 2026, 00:19 CET', 'info');
+            
+            alert('📜 Genesis Certificate Initialized!\n\nCertificate ID: SEED-GEN-01-01-10\nReady for protocol completion.');
+        }
+        
+        async function completeGenesisProtocol() {
+            if (!genesis) {
+                alert('⚠️ Please initialize Genesis first');
+                return;
+            }
+            
+            if (genesis.certificate.sealed) {
+                alert('⚠️ Genesis Certificate already sealed');
+                return;
+            }
+            
+            addGenesisLog('🔒 Starting Genesis Protocol...', 'info');
+            
+            // Disable button during protocol
+            const btn = document.getElementById('genesis-seal-btn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Processing...';
+            
+            // Run complete protocol
+            const document = await genesis.completeGenesisProtocol();
+            
+            if (document) {
+                // Update UI
+                updateGenesisStatus();
+                
+                // Enable export
+                document.getElementById('genesis-export-btn').disabled = false;
+                
+                // Update button
+                btn.textContent = '✅ Protocol Complete';
+                
+                addGenesisLog('✅ GENESIS PROTOCOL COMPLETE', 'success');
+                addGenesisLog('🔒 Certificate SEALED and IMMUTABLE', 'success');
+                addGenesisLog(`📊 Final S-ROI: ${genesis.certificate.ethicalCode.sRoi}`, 'success');
+                addGenesisLog('🕊️ Holy Silence Mode ACTIVE', 'success');
+                
+                alert(`🔒 GENESIS PROTOCOL COMPLETE!\n\n✅ Certificate Sealed: IMMUTABLE\n📊 S-ROI: ${genesis.certificate.ethicalCode.sRoi}\n🕊️ Holy Silence Active\n⏰ Next: Coronation Day - January 10, 2026\n\nSACRALIS OMNIBUS.`);
+            } else {
+                btn.disabled = false;
+                btn.textContent = '🔒 Complete Protocol & Seal';
+                addGenesisLog('❌ Protocol failed - system not fully validated', 'error');
+                alert('❌ Genesis Protocol Failed\n\nPlease ensure all systems are active and validated.');
+            }
+        }
+        
+        function exportGenesisCertificate() {
+            if (!genesis || !genesis.certificate.sealed) {
+                alert('⚠️ Certificate must be sealed before export');
+                return;
+            }
+            
+            const certificateJson = genesis.exportCertificate();
+            
+            // Create download
+            const blob = new Blob([certificateJson], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `genesis-certificate-${genesis.certificate.certificateId}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            addGenesisLog('💾 Certificate exported to JSON', 'success');
+            alert('💾 Genesis Certificate Exported!\n\nFile: genesis-certificate-SEED-GEN-01-01-10.json');
+        }
+        
+        function updateGenesisStatus() {
+            if (!genesis) return;
+            
+            const status = genesis.getCertificateStatus();
+            
+            // Update metrics
+            document.getElementById('genesis-sroi').textContent = status.sRoi.toFixed(4);
+            document.getElementById('genesis-status').textContent = status.sealed ? 'SEALED' : 'NOT SEALED';
+            document.getElementById('genesis-integrity').textContent = status.validated ? '1.00' : '0.00';
+            
+            // Update hash and block
+            if (status.rootHash) {
+                document.getElementById('genesis-hash').textContent = status.rootHash.substring(0, 80) + '...';
+            }
+            if (status.blockNumber) {
+                document.getElementById('genesis-block').textContent = `Block #${status.blockNumber}`;
+            }
+            
+            // Update resonance state
+            if (status.resonanceState) {
+                document.getElementById('state-kernel').textContent = status.resonanceState.coreKernel;
+                document.getElementById('state-pipelines').textContent = status.resonanceState.pipelines;
+                document.getElementById('state-nodes').textContent = status.resonanceState.backupNodes;
+                document.getElementById('state-vision').textContent = status.resonanceState.vision;
+            }
+            
+            // Update validations if sealed
+            if (status.validated) {
+                updateValidationStatus('val-core', true);
+                updateValidationStatus('val-ethical', true);
+                updateValidationStatus('val-vbs', true);
+                updateValidationStatus('val-economic', true);
+                updateValidationStatus('val-resonance', true);
+            }
+        }
+        
+        function updateValidationStatus(elementId, valid) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.textContent = valid ? 'VALID' : 'PENDING';
+                el.className = `px-3 py-1 rounded text-xs font-bold ${
+                    valid ? 'bg-green-900/30 text-green-400' : 'bg-gray-900/30 text-gray-400'
+                }`;
+            }
+        }
+        
+        function addGenesisLog(message, type = 'info') {
+            const logContainer = document.getElementById('genesis-log');
+            const logEntry = document.createElement('div');
+            logEntry.className = `p-2 rounded text-sm ${
+                type === 'success' ? 'bg-green-900/20 text-green-400' :
+                type === 'warning' ? 'bg-yellow-900/20 text-yellow-400' :
+                type === 'error' ? 'bg-red-900/20 text-red-400' :
+                'bg-blue-900/20 text-blue-400'
+            }`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            logEntry.innerHTML = `<span class="text-gray-500">[${timestamp}]</span> ${message}`;
+            
+            logContainer.insertBefore(logEntry, logContainer.firstChild);
+            
+            // Keep only last 50 entries
+            while (logContainer.children.length > 50) {
                 logContainer.removeChild(logContainer.lastChild);
             }
         }

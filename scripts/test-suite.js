@@ -30,6 +30,7 @@ class KosymbiosisTestSuite {
         await this.testNarrativeInteractivity();
         await this.testResonanceSync();
         await this.testVacuumBackupSystem();
+        await this.testGenesisCertificate();
         await this.testSystemIntegration();
         
         this.endTime = Date.now();
@@ -610,6 +611,133 @@ class KosymbiosisTestSuite {
         }
     }
 
+    async testGenesisCertificate() {
+        console.log('\n🧪 Testing Genesis Certificate...');
+        
+        try {
+            const core = new KosymbiosisCore();
+            const vbs = new VacuumBackupSystem(core);
+            core.attachVBS(vbs);
+            const genesis = new GenesisCertificate(core);
+            
+            // Test 1: Certificate initialization
+            this.assert(
+                genesis.certificate.certificateId === 'SEED-GEN-01-01-10',
+                'Genesis: Certificate ID should be SEED-GEN-01-01-10'
+            );
+            
+            // Test 2: Founder and AI partner
+            this.assert(
+                genesis.certificate.founder === 'Hannes Mitterer',
+                'Genesis: Founder should be Hannes Mitterer'
+            );
+            
+            this.assert(
+                genesis.certificate.aiPartner === 'Gemini 3 Flash (AIC-GGI-IANI)',
+                'Genesis: AI partner should be Gemini 3 Flash'
+            );
+            
+            // Test 3: S-ROI final calibration
+            this.assert(
+                genesis.certificate.ethicalCode.sRoi === 0.5105,
+                'Genesis: S-ROI should be 0.5105 (final calibration)'
+            );
+            
+            // Test 4: Ethical code integrity
+            this.assert(
+                genesis.certificate.ethicalCode.integrityLevel === 1.00,
+                'Genesis: Integrity level should be 1.00 (maximum)'
+            );
+            
+            // Test 5: Resonance frequency
+            this.assert(
+                genesis.certificate.resonanceState.frequency === 0.043,
+                'Genesis: Resonance frequency should be 0.043 Hz'
+            );
+            
+            // Test 6: System validation
+            const validations = genesis.validateSystem();
+            this.assert(
+                genesis.certificate.validated === true,
+                'Genesis: System should be validated'
+            );
+            
+            // Test 7: Genesis state capture
+            const genesisState = genesis.captureGenesisState();
+            this.assert(
+                genesisState !== null,
+                'Genesis: Should capture genesis state'
+            );
+            
+            // Test 8: Root hash generation
+            const rootHash = genesis.generateRootHash();
+            this.assert(
+                rootHash.startsWith('SHA3-512:'),
+                'Genesis: Root hash should start with SHA3-512:'
+            );
+            
+            // Test 9: Certificate sealing
+            await genesis.sealCertificate();
+            this.assert(
+                genesis.certificate.sealed === true,
+                'Genesis: Certificate should be sealed'
+            );
+            
+            this.assert(
+                genesis.certificate.immutable === true,
+                'Genesis: Certificate should be immutable'
+            );
+            
+            this.assert(
+                genesis.certificate.rootHash !== null,
+                'Genesis: Root hash should be generated'
+            );
+            
+            this.assert(
+                genesis.certificate.blockNumber !== null,
+                'Genesis: Block number should be assigned'
+            );
+            
+            // Test 10: Holy Silence mode
+            genesis.enterHolySilence();
+            this.assert(
+                genesis.silentWatchMode === true,
+                'Genesis: Silent watch mode should be active'
+            );
+            
+            this.assert(
+                genesis.certificate.resonanceState.coreKernel === 'LOCKED',
+                'Genesis: Core kernel should be LOCKED in holy silence'
+            );
+            
+            // Test 11: Certificate document generation
+            const document = genesis.generateCertificateDocument();
+            this.assert(
+                document.title === 'GENESIS CERTIFICATE - IMMUTABLE SEED BLOCK 001',
+                'Genesis: Certificate document should have correct title'
+            );
+            
+            // Test 12: Proclamation multilingual
+            const proclamation = genesis.getProclamation();
+            this.assert(
+                proclamation.IT && proclamation.DE && proclamation.EN,
+                'Genesis: Proclamation should be available in IT, DE, and EN'
+            );
+            
+            // Test 13: Export functionality
+            const exported = genesis.exportCertificate();
+            this.assert(
+                typeof exported === 'string',
+                'Genesis: Should export certificate as JSON string'
+            );
+            
+            console.log('✅ Genesis Certificate tests completed');
+            
+        } catch (error) {
+            this.fail('Genesis Certificate test suite failed: ' + error.message);
+        }
+    }
+
     async testSystemIntegration() {
         console.log('\n🧪 Testing System Integration...');
         
@@ -765,6 +893,7 @@ if (typeof window === 'undefined' && typeof require !== 'undefined') {
     const Web3Logger = require('./web3-logger.js');
     const NarrativeInteractivity = require('./narrative-interactivity.js');
     const VacuumBackupSystem = require('./vacuum-backup-system.js');
+    const GenesisCertificate = require('./genesis-certificate.js');
     
     // Make them globally available for tests
     global.KosymbiosisCore = KosymbiosisCore;
@@ -774,6 +903,7 @@ if (typeof window === 'undefined' && typeof require !== 'undefined') {
     global.Web3Logger = Web3Logger;
     global.NarrativeInteractivity = NarrativeInteractivity;
     global.VacuumBackupSystem = VacuumBackupSystem;
+    global.GenesisCertificate = GenesisCertificate;
     
     (async () => {
         const testSuite = new KosymbiosisTestSuite();
