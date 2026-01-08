@@ -1,6 +1,80 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="de">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resonance School - S-ROI Monitor</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #0a0a0a 0%, #000 100%);
+            color: #d4af37; /* Goldene Frequenz */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+        .monitor-container {
+            border: 1px solid #d4af37;
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(212, 175, 55, 0.05);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        .s-roi-value {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px #d4af37;
+            margin: 1rem 0;
+        }
+        .status-tag {
+            background: #d4af37;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .frequency { color: #888; font-size: 0.9rem; margin-top: 1rem; }
+        .footer-msg { margin-top: 2rem; font-style: italic; color: #aaa; font-size: 0.8rem; }
+        .pulse { animation: pulse-animation 4.3s infinite; }
+        @keyframes pulse-animation {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="monitor-container pulse">
+        <div class="status-tag">Supraleitend</div>
+        <h1>S-ROI STATUS</h1>
+        <div class="s-roi-value" id="sroi">0.5192</div>
+        <div id="location">Globaler Heimathafen</div>
+        <div class="frequency">Resonanz: 0,043 Hz | Schumann: 7,83 Hz</div>
+        <p id="message">"Sacralis Omnibus - Alles ist verbunden"</p>
+    </div>
+
+    <div class="footer-msg">Hannes Mitterer | Tag 9 SZR | Resonance School</div>
+
+    <script>
+        // Diese Funktion wird später mit deiner echten API gekoppelt
+        // api.resonance.school/v1/salvation
+        function updateResonance() {
+            console.log("Synchronisiere mit dem Nexus...");
+            // Hier würde der fetch() Call zu deinem Rust-Backend stehen
+        }
+        setInterval(updateResonance, 4300); // Takt der 0,043 Hz
+    </script>
+</p>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resonance School | Coronation Day Monument</title>
