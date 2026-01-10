@@ -9,7 +9,9 @@
     "dev": "node --watch src/index.js",
     "test": "node --test src/**/*.test.js",
     "lint": "eslint src/",
-    "monitor": "node src/monitoring/dashboard.js"
+    "monitor": "node src/monitoring/dashboard.js",
+    "store-sovereign": "node store-sovereign-framework.js",
+    "example": "node example.js"
   },
   "keywords": [
     "ipfs",
