@@ -1,0 +1,535 @@
+/**
+ * ═══════════════════════════════════════════════════════
+ * KOSYMBIOSIS FRAMEWORK STYLES
+ * ═══════════════════════════════════════════════════════
+ * Styles for AIC modules, node monitoring, and Web3 components
+ */
+
+/* ==================== Node Monitoring Dashboard ==================== */
+
+.node-dashboard {
+  font-family: 'Lato', sans-serif;
+  color: #2D2D2D;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2D2D2D;
+}
+
+.stats-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: #F9F8F4;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #C5A059;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2D2D2D;
+}
+
+.stat-value.active {
+  color: #27ae60;
+}
+
+.stat-value.health {
+  color: #C5A059;
+}
+
+/* Core Nodes Section */
+
+.core-nodes-section {
+  margin-bottom: 3rem;
+}
+
+.core-nodes-section h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2D2D2D;
+}
+
+.core-nodes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.core-node-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-top: 3px solid #E5E5E0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.core-node-card:hover {
+  border-top-color: #C5A059;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.core-node-card.online {
+  border-top-color: #27ae60;
+}
+
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.node-id {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.status-indicator.online {
+  background: #27ae60;
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+}
+
+.node-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #2D2D2D;
+}
+
+.node-role {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.node-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid #E5E5E0;
+  font-size: 0.75rem;
+  color: #999;
+}
+
+/* Distributed Nodes Section */
+
+.distributed-nodes-section {
+  margin-bottom: 3rem;
+}
+
+.distributed-nodes-section h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2D2D2D;
+}
+
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.region-card {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.region-name {
+  font-weight: bold;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  color: #2D2D2D;
+}
+
+.region-count {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #C5A059;
+  margin-bottom: 0.75rem;
+}
+
+.region-bar {
+  width: 100%;
+  height: 8px;
+  background: #F0EFE9;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.region-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #C5A059, #D4C5A5);
+  transition: width 0.3s ease;
+}
+
+.region-percentage {
+  font-size: 0.75rem;
+  color: #999;
+  text-align: right;
+}
+
+/* Network Visualization */
+
+.network-visualization {
+  margin-top: 3rem;
+}
+
+.network-visualization h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2D2D2D;
+}
+
+#networkCanvas {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background: #F9F8F4;
+}
+
+/* ==================== IPFS Library ==================== */
+
+.ipfs-library {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.library-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.library-header h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #2D2D2D;
+}
+
+.library-header p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.document-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.document-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.document-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.document-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.document-icon {
+  font-size: 1.5rem;
+}
+
+.document-header h4 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.125rem;
+  color: #2D2D2D;
+}
+
+.document-cid {
+  background: #F9F8F4;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  word-break: break-all;
+}
+
+.document-cid code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.document-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 120px;
+}
+
+.btn-primary {
+  background: #C5A059;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #B39049;
+}
+
+.btn-secondary {
+  background: #F0EFE9;
+  color: #2D2D2D;
+}
+
+.btn-secondary:hover {
+  background: #E5E5E0;
+}
+
+/* ==================== Web3 Log Viewer ==================== */
+
+.web3-log-viewer {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.log-viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #E5E5E0;
+}
+
+.log-viewer-header h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  color: #2D2D2D;
+}
+
+.log-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.log-count {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.btn-clear,
+.btn-export {
+  padding: 0.5rem 1rem;
+  border: 1px solid #E5E5E0;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.btn-clear:hover {
+  background: #fee;
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.btn-export:hover {
+  background: #C5A059;
+  border-color: #C5A059;
+  color: white;
+}
+
+.log-entries {
+  max-height: 500px;
+  overflow-y: auto;
+  background: #F9F8F4;
+  border-radius: 4px;
+  padding: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+.log-entry {
+  padding: 0.5rem;
+  margin-bottom: 0.25rem;
+  border-left: 3px solid #E5E5E0;
+  background: white;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.log-entry.level-info {
+  border-left-color: #3498db;
+}
+
+.log-entry.level-warn {
+  border-left-color: #f39c12;
+  background: #fffbf0;
+}
+
+.log-entry.level-error {
+  border-left-color: #e74c3c;
+  background: #fff5f5;
+}
+
+.log-entry.level-debug {
+  border-left-color: #95a5a6;
+  opacity: 0.7;
+}
+
+.log-time {
+  color: #999;
+  font-size: 0.75rem;
+  min-width: 70px;
+}
+
+.log-category {
+  color: #C5A059;
+  font-weight: bold;
+  min-width: 100px;
+}
+
+.log-message {
+  flex: 1;
+  color: #2D2D2D;
+}
+
+.log-blockchain {
+  font-size: 1rem;
+  cursor: help;
+}
+
+/* ==================== Resonance Visualization ==================== */
+
+.resonance-canvas {
+  width: 100%;
+  max-width: 800px;
+  height: 200px;
+  border-radius: 8px;
+  background: #F9F8F4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ==================== Responsive Design ==================== */
+
+@media (max-width: 768px) {
+  .core-nodes-grid,
+  .region-grid,
+  .document-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .log-viewer-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .node-dashboard {
+    padding: 1rem;
+  }
+}
+
+/* ==================== Utility Classes ==================== */
+
+.text-center {
+  text-align: center;
+}
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.accent-gold { color: #C5A059; }
+.bg-gold { background-color: #C5A059; }
