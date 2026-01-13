@@ -1,0 +1,44 @@
+{
+  "name": "resonance-school-data-integration",
+  "version": "1.0.0",
+  "description": "Automated live data integration system with IPFS, API discovery, and self-healing capabilities",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test src/**/*.test.js",
+    "lint": "eslint src/",
+    "monitor": "node src/monitoring/dashboard.js",
+    "store-sovereign": "node store-sovereign-framework.js",
+    "example": "node example.js"
+  },
+  "keywords": [
+    "ipfs",
+    "data-integration",
+    "api-discovery",
+    "real-time",
+    "self-healing",
+    "monitoring"
+  ],
+  "author": "Resonance School",
+  "license": "MIT",
+  "dependencies": {
+    "ipfs-http-client": "^60.0.1",
+    "ws": "^8.16.0",
+    "axios": "^1.6.5",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
+    "express": "^4.18.2",
+    "prom-client": "^15.1.0",
+    "winston": "^3.11.0",
+    "node-cron": "^3.0.3",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
