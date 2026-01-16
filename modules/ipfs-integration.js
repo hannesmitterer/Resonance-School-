@@ -177,6 +177,29 @@ class IPFSIntegration {
   }
 
   /**
+   * Safely escape HTML special characters in a string
+   */
+  escapeHtml(value) {
+    if (value === null || value === undefined) return '';
+    return String(value).replace(/[&<>"']/g, (char) => {
+      switch (char) {
+        case '&':
+          return '&amp;';
+        case '<':
+          return '&lt;';
+        case '>':
+          return '&gt;';
+        case '"':
+          return '&quot;';
+        case "'":
+          return '&#39;';
+        default:
+          return char;
+      }
+    });
+  }
+
+  /**
    * Render document library
    */
   renderDocumentLibrary(containerId) {
@@ -192,25 +215,32 @@ class IPFSIntegration {
           <p>All documents are stored on IPFS for eternal access</p>
         </div>
         <div class="document-grid">
-          ${documents.map(doc => `
+          ${documents.map(doc => {
+            const safeKey = this.escapeHtml(this.formatDocumentKey(doc.key));
+            const safeCid = this.escapeHtml(doc.cid);
+            const safeUrl = this.escapeHtml(doc.url);
+            const safeAltUrl = this.escapeHtml(doc.alternateUrl);
+            
+            return `
             <div class="document-card">
               <div class="document-header">
                 <span class="document-icon">📄</span>
-                <h4>${this.formatDocumentKey(doc.key)}</h4>
+                <h4>${safeKey}</h4>
               </div>
               <div class="document-cid">
-                <code>${doc.cid}</code>
+                <code>${safeCid}</code>
               </div>
               <div class="document-actions">
-                <a href="${doc.url}" target="_blank" class="btn-primary">
+                <a href="${safeUrl}" target="_blank" class="btn-primary">
                   View on IPFS
                 </a>
-                <a href="${doc.alternateUrl}" target="_blank" class="btn-secondary">
+                <a href="${safeAltUrl}" target="_blank" class="btn-secondary">
                   Alternate Gateway
                 </a>
               </div>
             </div>
-          `).join('')}
+          `;
+          }).join('')}
         </div>
       </div>
     `;

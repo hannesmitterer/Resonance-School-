@@ -129,22 +129,52 @@ class NodeMonitoringDashboard {
   }
 
   /**
+   * Safely escape HTML special characters in a string
+   */
+  escapeHtml(value) {
+    if (value === null || value === undefined) return '';
+    return String(value).replace(/[&<>"']/g, (char) => {
+      switch (char) {
+        case '&':
+          return '&amp;';
+        case '<':
+          return '&lt;';
+        case '>':
+          return '&gt;';
+        case '"':
+          return '&quot;';
+        case "'":
+          return '&#39;';
+        default:
+          return char;
+      }
+    });
+  }
+
+  /**
    * Render core nodes
    */
   renderCoreNodes() {
-    return this.coreNodes.map(node => `
-      <div class="core-node-card ${node.status}" data-node-id="${node.id}">
+    return this.coreNodes.map(node => {
+      const safeId = this.escapeHtml(node.id);
+      const safeName = this.escapeHtml(node.name);
+      const safeRole = this.escapeHtml(node.role);
+      const safeStatus = this.escapeHtml(node.status);
+      
+      return `
+      <div class="core-node-card ${safeStatus}" data-node-id="${safeId}">
         <div class="node-header">
-          <span class="node-id">${node.id}</span>
-          <div class="status-indicator ${node.status}"></div>
+          <span class="node-id">${safeId}</span>
+          <div class="status-indicator ${safeStatus}"></div>
         </div>
-        <h4 class="node-name">${node.name}</h4>
-        <p class="node-role">${node.role}</p>
+        <h4 class="node-name">${safeName}</h4>
+        <p class="node-role">${safeRole}</p>
         <div class="node-metrics">
           ${this.renderNodeMetrics(node)}
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   /**
@@ -153,10 +183,10 @@ class NodeMonitoringDashboard {
   renderNodeMetrics(node) {
     const metrics = [];
     
-    if (node.ping) metrics.push(`<span>Ping: ${node.ping}</span>`);
-    if (node.sync) metrics.push(`<span>Sync: ${node.sync}</span>`);
-    if (node.load) metrics.push(`<span>Load: ${node.load}</span>`);
-    if (node.failover) metrics.push(`<span>Failover: ${node.failover}</span>`);
+    if (node.ping) metrics.push(`<span>Ping: ${this.escapeHtml(node.ping)}</span>`);
+    if (node.sync) metrics.push(`<span>Sync: ${this.escapeHtml(node.sync)}</span>`);
+    if (node.load) metrics.push(`<span>Load: ${this.escapeHtml(node.load)}</span>`);
+    if (node.failover) metrics.push(`<span>Failover: ${this.escapeHtml(node.failover)}</span>`);
     
     return metrics.join('');
   }

@@ -194,7 +194,6 @@ class Web3LoggingFramework {
    * Generate simulated transaction hash
    */
   generateTransactionHash(entry) {
-    const data = JSON.stringify(entry);
     let hash = '0x';
     for (let i = 0; i < 64; i++) {
       hash += Math.floor(Math.random() * 16).toString(16);
@@ -280,8 +279,8 @@ class Web3LoggingFramework {
           <h3>🔗 Decentralized Log Viewer</h3>
           <div class="log-controls">
             <span class="log-count">${this.logs.length} total logs</span>
-            <button onclick="web3Logger.clearLogs()" class="btn-clear">Clear</button>
-            <button onclick="web3Logger.exportLogs()" class="btn-export">Export</button>
+            <button class="btn-clear" data-action="clear">Clear</button>
+            <button class="btn-export" data-action="export">Export</button>
           </div>
         </div>
         <div class="log-entries terminal-scroll">
@@ -292,10 +291,45 @@ class Web3LoggingFramework {
 
     container.innerHTML = html;
 
+    // Attach event listeners for buttons
+    const clearBtn = container.querySelector('.btn-clear');
+    const exportBtn = container.querySelector('.btn-export');
+    
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => this.clearLogs());
+    }
+    
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => this.exportLogs());
+    }
+
     // Setup real-time updates
     if (realtime) {
       this.setupRealtimeViewer(container, options);
     }
+  }
+
+  /**
+   * Safely escape HTML special characters in a string
+   */
+  escapeHtml(value) {
+    if (value === null || value === undefined) return '';
+    return String(value).replace(/[&<>"']/g, (char) => {
+      switch (char) {
+        case '&':
+          return '&amp;';
+        case '<':
+          return '&lt;';
+        case '>':
+          return '&gt;';
+        case '"':
+          return '&quot;';
+        case "'":
+          return '&#39;';
+        default:
+          return char;
+      }
+    });
   }
 
   /**
@@ -304,13 +338,16 @@ class Web3LoggingFramework {
   renderLogEntry(log) {
     const levelClass = log.level.toLowerCase();
     const time = new Date(log.timestamp).toLocaleTimeString();
+    const safeCategory = this.escapeHtml(log.category);
+    const safeMessage = this.escapeHtml(log.message);
+    const safeBlockchainTx = log.blockchainTx ? this.escapeHtml(log.blockchainTx) : '';
     
     return `
       <div class="log-entry level-${levelClass}">
         <span class="log-time">${time}</span>
-        <span class="log-category">[${log.category}]</span>
-        <span class="log-message">${log.message}</span>
-        ${log.blockchainTx ? `<span class="log-blockchain" title="${log.blockchainTx}">⛓️</span>` : ''}
+        <span class="log-category">[${safeCategory}]</span>
+        <span class="log-message">${safeMessage}</span>
+        ${safeBlockchainTx ? `<span class="log-blockchain" title="${safeBlockchainTx}">⛓️</span>` : ''}
       </div>
     `;
   }
