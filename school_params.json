@@ -1,0 +1,29 @@
+{
+  "resonance_target": {
+    "uvi_min": 40,
+    "uvi_max": 50,
+    "optimal_uvi": 45,
+    "tolerance": 0.5
+  },
+  "validation_logic": "baseline",
+  "test_data": {
+    "student_resonance_samples": [
+      {"id": "SEED_001", "uvi": 42.5, "timestamp": "2026-01-05T10:00:00Z"},
+      {"id": "SEED_002", "uvi": 47.3, "timestamp": "2026-01-05T10:15:00Z"},
+      {"id": "SEED_003", "uvi": 44.8, "timestamp": "2026-01-05T10:30:00Z"},
+      {"id": "SEED_004", "uvi": 41.2, "timestamp": "2026-01-05T10:45:00Z"},
+      {"id": "SEED_005", "uvi": 48.9, "timestamp": "2026-01-05T11:00:00Z"}
+    ],
+    "nsr_drift_samples": [
+      {"timestamp": "2026-01-05T10:00:00Z", "drift": 0.000},
+      {"timestamp": "2026-01-05T11:00:00Z", "drift": 0.000},
+      {"timestamp": "2026-01-05T12:00:00Z", "drift": 0.000}
+    ]
+  },
+  "system_config": {
+    "treasury_address": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb2",
+    "framework": "Euystacio/Optimus",
+    "launch_date": "2026-01-10",
+    "status": "pre_launch_validation"
+  }
+}
