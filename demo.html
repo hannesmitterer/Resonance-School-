@@ -195,6 +195,23 @@
             </div>
         </section>
 
+        <!-- Phase 8: Bio-Digital Synthesis -->
+        <section class="section">
+            <h2 class="section-title">🌱 Phase 8: Bio-Digital Synthesis</h2>
+            <div id="ivbsDashboard"></div>
+            <div class="info-box" style="margin-top: 2rem;">
+                <h3>Unveiling the Invisible</h3>
+                <p><strong>IVBS (Integrated Vital Biological System):</strong> Real-time synthesis of biological soil moisture and digital signal integrity.</p>
+                <p><strong>IFPS (Inter-Frequency Protection Shield):</strong> Active mapping of GPS jumps and signal interference, protecting the prototype.</p>
+                <p><strong>S-ROI (Social Return on Investment):</strong> Measuring resonance beyond currency - fertility, coherence, and synthesis.</p>
+                <p><strong>UIFS (Universal Information Filing System):</strong> Categorizing "living data" vs "dead data" - truth speaks louder than spoofing.</p>
+                <p style="margin-top: 1rem; font-style: italic; color: #C5A059;">
+                    "Where the biological soil of the mycelium matches the digital signal integrity of the devices, 
+                    technology speaks the same language as the earth."
+                </p>
+            </div>
+        </section>
+
         <!-- Philosophy -->
         <section class="section">
             <h2 class="section-title">🏛️ Philosophy & Principles</h2>
@@ -230,7 +247,9 @@
     <script src="modules/aic-module.js"></script>
     <script src="modules/ipfs-integration.js"></script>
     <script src="modules/web3-logging.js"></script>
+    <script src="modules/bio-digital-synthesis.js"></script>
     <script src="components/node-monitoring-dashboard.js"></script>
+    <script src="components/ivbs-dashboard.js"></script>
 
     <!-- Initialize Dashboard -->
     <script>
@@ -238,6 +257,7 @@
         window.addEventListener('DOMContentLoaded', async () => {
             console.log('═══════════════════════════════════════════════════════');
             console.log('  KOSYMBIOSIS FRAMEWORK DEMO INITIALIZATION');
+            console.log('  Version: 1.0.043 + Phase 8');
             console.log('═══════════════════════════════════════════════════════');
 
             // Initialize resonance visualization
@@ -249,6 +269,13 @@
             if (window.NodeMonitoringDashboard) {
                 const dashboard = new NodeMonitoringDashboard();
                 await dashboard.initialize('nodeDashboard');
+            }
+
+            // Initialize Phase 8: Bio-Digital Synthesis
+            if (window.IVBSDashboard && window.bioSynthesis) {
+                const ivbsDashboard = new IVBSDashboard();
+                await ivbsDashboard.initialize('ivbsDashboard', window.bioSynthesis);
+                console.log('✅ Phase 8: Bio-Digital Synthesis activated');
             }
 
             // Render IPFS library

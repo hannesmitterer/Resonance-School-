@@ -533,3 +533,405 @@
 
 .accent-gold { color: #C5A059; }
 .bg-gold { background-color: #C5A059; }
+
+/* ==================== Phase 8: IVBS Dashboard ==================== */
+
+.ivbs-dashboard {
+  font-family: 'Lato', sans-serif;
+  color: #2D2D2D;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboard-header-ivbs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid #C5A059;
+}
+
+.dashboard-header-ivbs h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  margin: 0;
+  color: #2D2D2D;
+}
+
+.phase-badge {
+  background: linear-gradient(135deg, #C5A059 0%, #D4C5A5 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* IVBS Health Panel */
+.ivbs-health-panel {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.ivbs-health-panel h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2D2D2D;
+}
+
+.health-gauge {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  justify-content: center;
+}
+
+.gauge-container {
+  flex-shrink: 0;
+}
+
+.health-breakdown {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.health-component {
+  display: grid;
+  grid-template-columns: 150px 1fr 60px;
+  align-items: center;
+  gap: 1rem;
+}
+
+.component-label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.component-bar {
+  height: 24px;
+  background: #E5E5E0;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 12px;
+}
+
+.component-value {
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: right;
+}
+
+/* Living Signal Panel */
+.living-signal-panel {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.living-signal-panel h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2D2D2D;
+}
+
+.signal-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.metric-card.bio {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-left: 4px solid #27ae60;
+}
+
+.metric-card.digital {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-left: 4px solid #3498db;
+}
+
+.metric-card h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2D2D2D;
+  margin: 0.5rem 0;
+}
+
+.metric-trend {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.metric-trend.rising {
+  background: #d4edda;
+  color: #155724;
+}
+
+.metric-trend.stable {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.metric-trend.falling {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.metric-detail {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.metric-status {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.metric-status.ok {
+  color: #27ae60;
+}
+
+.metric-status.alert {
+  color: #e74c3c;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+#livingSignalChart {
+  width: 100%;
+  height: 200px;
+  border: 1px solid #E5E5E0;
+  border-radius: 8px;
+  background: #F9F8F4;
+}
+
+/* S-ROI Panel */
+.sroi-panel {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.sroi-panel h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2D2D2D;
+  text-align: center;
+}
+
+.sroi-radar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+#sroiRadar {
+  max-width: 400px;
+  height: auto;
+}
+
+.sroi-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.sroi-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: #F9F8F4;
+  border-radius: 8px;
+  border-left: 4px solid #C5A059;
+}
+
+.sroi-label {
+  font-weight: 600;
+  color: #2D2D2D;
+}
+
+.sroi-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #C5A059;
+}
+
+/* UIFS Panel */
+.uifs-panel {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.uifs-panel h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2D2D2D;
+}
+
+.uifs-legend {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #F9F8F4;
+  border-radius: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot.living {
+  background: #27ae60;
+}
+
+.dot.dead {
+  background: #e74c3c;
+}
+
+.dot.unknown {
+  background: #95a5a6;
+}
+
+.uifs-stream {
+  max-height: 300px;
+  overflow-y: auto;
+  background: #2D2D2D;
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+}
+
+.uifs-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 150px 60px;
+  gap: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 0.25rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.uifs-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.uifs-time {
+  color: #95a5a6;
+}
+
+.uifs-id {
+  color: #3498db;
+}
+
+.uifs-type {
+  font-weight: 600;
+}
+
+.uifs-type.living-data {
+  color: #27ae60;
+}
+
+.uifs-type.dead-data {
+  color: #e74c3c;
+}
+
+.uifs-type.unknown {
+  color: #95a5a6;
+}
+
+.uifs-status {
+  text-align: right;
+}
+
+.no-data {
+  color: #95a5a6;
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .health-gauge {
+    flex-direction: column;
+  }
+  
+  .health-component {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .signal-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .sroi-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .uifs-item {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
